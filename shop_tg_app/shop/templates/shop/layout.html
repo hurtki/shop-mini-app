@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "shop/layout_style.css" %}">
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <header>
+        <div class="search_bar">
+            <img class="search_icon" src="{% static "shop/pics/search_icon.png" %}" alt="">
+            <input type="text" name="search_field" id="search_field" placeholder="Поиск по сайту">
+        </div>
+    </header>
+    {% block body %}
+
+    {% endblock body %}
+</body>
+</html>
