@@ -16,8 +16,8 @@ class Category(models.Model):
         MaxValueValidator(10000)
     ])
     
-    # фотграфия категории / пока что фотографии не реализую 
-    # image = models.ImageField()
+
+    image = models.ImageField(upload_to='categories_photos/')
     
     def __str__(self):
         return self.name

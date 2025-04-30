@@ -33,6 +33,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# указываем базовые папки для хранения медиа файлов 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 # Application definition
 
 INSTALLED_APPS = [
