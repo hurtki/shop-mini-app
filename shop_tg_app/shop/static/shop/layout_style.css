@@ -1,15 +1,15 @@
 header {
     width: 100%;
-    height: 10%;
+    height: 10vh;
     background-color: #D3D0CB;
-    position: absolute;
-    left: 0;
-    top: 0;
     border-bottom: 3px solid black;
+    position: relative;
 }
+
+
 body {
     background-color: #C0C0C0;
-    margin: 0;          /* Убираем дефолтные отступы */
+    margin: 0;        
     overflow-x: hidden;
 }
 
