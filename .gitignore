@@ -178,3 +178,4 @@ cython_debug/
 
 media/
 base_shirts/
+.DS_store
