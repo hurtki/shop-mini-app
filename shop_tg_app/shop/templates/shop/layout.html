@@ -5,19 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static "shop/layout_style.css" %}">
+    <link rel="stylesheet" href="{% static 'shop/layout_style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'shop/pics/icon.ico' %}" type="image/x-icon">
     {% block head %}{% endblock head %}
 </head>
 <body>
     <header>
+        <div class="category_bar">
+            <img  class="category_icon" src="{% static "shop/pics/category_icon.svg" %}" alt="category pick">
+        </div>
+        
         <div class="search_bar">
-            <img class="search_icon" src="{% static "shop/pics/search_icon.png" %}" alt="">
-            <input type="text" name="search_field" id="search_field" placeholder="Поиск по сайту">
+            <img  class="search_icon" src="{% static "shop/pics/search_icon.svg" %}" alt="search">
+            <input type="text" name="search_field" id="search_field" placeholder="Я ищу..">
+        </div>
+        
+        <div class="sort_bar">
+            <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick">
         </div>
     </header>
+    
+    <div class="categories"> 
+        <img class="cross_categories_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
     </div>
-    {% block body %}
 
-    {% endblock body %}
+    <layoutbody>{% block body %}{% endblock body %}</layoutbody>
+
+
+    <hr class="footer-separator">
+
+    <footer class="mobile-footer">
+        <img class="footer-icon" src="{% static "shop/pics/icon.ico" %}" alt="">
+        <p class="footer-contact">Email: support@zipwear.store</p>
+        <p class="footer-contact">Тел: +7-555-123-456</p>
+        <p class="footer-contact">
+        Telegramm: <a href="https://t.me/@void_shop" target="_blank">@void_shop</a>
+        </p>
+        <p class="footer-bottom">&copy; 2025 Void shop</p>
+    </footer>
+
+      
 </body>
 </html>

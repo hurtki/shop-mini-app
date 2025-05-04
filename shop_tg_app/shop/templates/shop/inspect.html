@@ -1,0 +1,52 @@
+{% extends "shop/layout.html" %}
+{% load static %}
+
+{% block title %}inspect{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "shop/inspect.css" %}">
+    <!-- добавляе заыисимость swiper js для приятного скролла картинок -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+{% endblock head %}
+    
+{% block body %}
+    
+    <h2 class="name_tag">Zip hoodie Burbry</h2>
+    <!-- галеррея -->
+    <div class="swiper">
+        <div class="swiper-wrapper">
+        <div class="swiper-slide"><img class="slider_image" src="{% static "shop/pics/base_shirts/burberry1.webp" %}" /></div>
+        <div class="swiper-slide"><img class="slider_image" src="{% static "shop/pics/base_shirts/burberry2.webp" %}" /></div>
+        <div class="swiper-slide"><img class="slider_image" src="{% static "shop/pics/base_shirts/burberry3.webp" %}" /></div>
+        </div>
+        <!-- Кружочки -->
+        <div class="swiper-pagination"></div>
+
+    </div>
+    <!-- выбор размера -->
+    <div class="size-picker">
+        <!-- один из размеров-->
+        <input type="radio" id="size-s" name="size" value="S">
+        <label for="size-s">S</label>
+      
+        <input type="radio" id="size-m" name="size" value="M">
+        <label for="size-m">M</label>
+      
+        <input type="radio" id="size-l" name="size" value="L">
+        <label for="size-l">L</label>
+    </div>
+
+    <!-- кнопка для сбора всего вместе и перенаправления в чат с нужным сообщением -->
+    <div class="contact_seller_container">
+        <button class="contact_seller_button">Приобрести</button>
+      </div>
+    <!-- подключаю основной js скрипт -->
+    <script src="{% static "shop/inspect.js" %}"></script>
+
+    
+{% endblock body %}
+
+
+ 

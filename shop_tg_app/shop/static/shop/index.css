@@ -20,3 +20,42 @@
     justify-content: center;  /* по горизонтали */
     align-items: center;
 }
+
+.products_block {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0vw 2vw;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+.product {
+    width: 44vw;
+    border-radius: 15px;
+    height: 35vh;
+    position: relative;
+    margin-top: 5vw;
+
+}
+
+.product_photo {
+    width: 100%;
+    height: 85%;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.product_price_tag {
+    margin: 0;
+    color: rgb(203, 215, 215);
+    margin-block: 0;
+    padding: 0;
+}
+
+.product_name_tag {
+    margin: 0;
+    color: rgb(147, 149, 149);;
+}
