@@ -1,8 +1,11 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 class Category(models.Model):
-    """класс модели категории / реализутся иерархия категорий"""
+    """
+    класс модели категории / реализутся иерархия категорий
+    """
     
     name = models.CharField(max_length=20)
     
@@ -10,14 +13,12 @@ class Category(models.Model):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     
     # важность категории, от этого будет зависеть порядок их показа в меню, чем больше тем важннее!
-    
     priority = models.IntegerField(validators=[
         MinValueValidator(-1),
         MaxValueValidator(10000)
     ])
     
 
-    image = models.ImageField(upload_to='categories_photos/')
     
     def __str__(self):
         return self.name
@@ -31,7 +32,6 @@ class ProductStock(models.Model):
     
     product = models.ForeignKey(to="Product", on_delete=models.CASCADE, related_name='stock_items')
     
-    color = models.ForeignKey(to="Color", on_delete=models.CASCADE)
     
     size = models.ForeignKey(to="Size", on_delete=models.CASCADE)
     
@@ -41,19 +41,24 @@ class ProductStock(models.Model):
     ])  
 
     class Meta:
-        unique_together = ('product', 'color', 'size')
+        unique_together = ('product', 'size')
 
     def __str__(self):
-        return f"{self.product.name} ({self.color.name}, {self.size.name}) — {self.quantity} шт."
+        return f"{self.product.name}, {self.size.name} — {self.quantity} шт."
 
-    
+    def clean(self):
+        # Проверяем, что размер присутствует в списке доступных размеров продукта
+        if self.size not in self.product.sizes.all():
+            raise ValidationError(f"Размер {self.size.name} не доступен для этого продукта.")
     
     
 class Product(models.Model):
-    """класс модели продукта
+    """
+    класс модели продукта
     есть вариации и размеры
     тоесть те вариации и размеры которые подключенны через поля они описывают все возможные комбинации продукта
-    а уже товары на складе будут описывать что есть а чего нету на данный момент"""
+    а уже товары на складе будут описывать что есть а чего нету на данный момент
+    """
     
     # категория продукта 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
@@ -63,8 +68,6 @@ class Product(models.Model):
     
     description = models.TextField(max_length=500)
     
-    # возмодные цвета продукта 
-    colors = models.ManyToManyField('Color', related_name="products_with_color")
     # возможные размеры продукта 
     sizes = models.ManyToManyField("Size", related_name="products_with_size")
     
@@ -73,29 +76,29 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    
-class Color(models.Model):
+class ProductPhoto(models.Model):
     """
-    класс модели расскраски 
+    Класс модели фотграфии продукта которую я уже буду привязывать к продукту
     """
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, related_name="fotos")
+    image = models.ImageField(upload_to="products_photos/")
     
-    name = models.CharField(max_length=15, unique=True)
-    
-    # фотграфия категории / пока что фотографии не реализую 
-    # image = models.ImageField()
+    # порядок фотграфий, приоритет / может будет реализация красивого перетаскивания фото в админке для создавания их порядка
+    priority = models.IntegerField(validators=[
+        MinValueValidator(-1),
+        MaxValueValidator(10000)
+    ], default=0)
     
     def __str__(self):
-        return self.name
-    
+        return f"Фото для {self.product.name} (приоритет {self.priority})"
+
+
 class Size(models.Model):
     """
     класс модели размера 
     """
     
     name = models.CharField(max_length=15, unique=True)
-    
-    # фотграфия категории / пока что фотографии не реализую 
-    # image = models.ImageField()
     
     def __str__(self):
         return self.name
