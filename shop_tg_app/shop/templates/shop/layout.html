@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <div class="category_bar">
+        <div class="category_bar" id="category_icon_div">
             <img  class="category_icon" src="{% static "shop/pics/category_icon.svg" %}" alt="category pick">
         </div>
         
@@ -21,14 +21,19 @@
             <input type="text" name="search_field" id="search_field" placeholder="Я ищу..">
         </div>
         
-        <div class="sort_bar">
-            <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick">
+        <div class="sort_bar" id="sort_icon_div" onclick="toggleSort()">
+            <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick" >
+            <div class="sortings" id="sortings"> 
+                <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
+            </div>
         </div>
     </header>
     
-    <div class="categories"> 
+    <div class="categories">  
         <img class="cross_categories_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
     </div>
+
+    
 
     <layoutbody>{% block body %}{% endblock body %}</layoutbody>
 
@@ -45,6 +50,7 @@
         <p class="footer-bottom">&copy; 2025 Void shop</p>
     </footer>
 
+    <script src="{% static "shop/layout.js" %}"></script>
       
 </body>
 </html>
