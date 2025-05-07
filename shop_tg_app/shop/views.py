@@ -5,6 +5,6 @@ def main_page(request):
     return render(request, template_name="shop/index.html")
 
 # страница с категориями
-def inspect(request):
+def inspect_page(request):
     return render(request, template_name="shop/inspect.html")
 

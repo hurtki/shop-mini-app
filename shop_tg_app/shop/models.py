@@ -28,13 +28,12 @@ class ProductStock(models.Model):
     Модель продукта на складе, связывает продукт, цвет, и размер.
     """
 
-    # планируется сделать валидацию наличия у продукта этого цвета и размера перед добавлением такой связи, ну ладно 
-    
+    # сам пррдукт наличие которого на скалде мы описваем 
     product = models.ForeignKey(to="Product", on_delete=models.CASCADE, related_name='stock_items')
     
-    
+    # ссылка на свзяь 
     size = models.ForeignKey(to="Size", on_delete=models.CASCADE)
-    
+    # количество в котором продукт будет на складе
     quantity = models.PositiveIntegerField(default=0, validators=[
         MinValueValidator(0),
         MaxValueValidator(100)
@@ -83,7 +82,7 @@ class ProductPhoto(models.Model):
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, related_name="fotos")
     image = models.ImageField(upload_to="products_photos/")
     
-    # порядок фотграфий, приоритет / может будет реализация красивого перетаскивания фото в админке для создавания их порядка
+    # порядок в котором будут отображаться фотграфии на странице 
     priority = models.IntegerField(validators=[
         MinValueValidator(-1),
         MaxValueValidator(10000)

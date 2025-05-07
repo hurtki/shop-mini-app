@@ -4,42 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- даем возможность указывать тайтл у наследователей шаблона -->
     <title>{% block title %}{% endblock title %}</title>
+    
+    <!-- ссылка на основной стиль layout страницы -->
     <link rel="stylesheet" href="{% static 'shop/layout_style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- ссылка на икноку -->
     <link rel="shortcut icon" href="{% static 'shop/pics/icon.ico' %}" type="image/x-icon">
+    
     {% block head %}{% endblock head %}
 </head>
 <body>
+    <!-- верхняя панель -->
     <header>
+        <!-- блок с икнокной катгории через который вызвается окно выбора категории-->
         <div class="category_bar" id="category_icon_div">
             <img  class="category_icon" src="{% static "shop/pics/category_icon.svg" %}" alt="category pick">
+            <!-- меню категорий / изначально скрыто -->
+            <div class="categories">  
+                <img class="cross_categories_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
+            </div>
         </div>
-        
+        <!-- блок для поиска по продтукам -->
         <div class="search_bar">
             <img  class="search_icon" src="{% static "shop/pics/search_icon.svg" %}" alt="search">
+            <!-- фактический инпут для реализовки поиска-->
             <input type="text" name="search_field" id="search_field" placeholder="Я ищу..">
         </div>
-        
+        <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
         <div class="sort_bar" id="sort_icon_div" onclick="toggleSort()">
             <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick" >
+            <!-- меню сортировок / изначально скрыто -->
             <div class="sortings" id="sortings"> 
                 <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
             </div>
         </div>
     </header>
     
-    <div class="categories">  
-        <img class="cross_categories_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
-    </div>
-
+    
     
 
+    
+    <!-- основное тело шаблона которое будет уже прописываться в конкретном файле -->
+    <!-- так же отдельный тег для отдельного задания ей стилей -->
     <layoutbody>{% block body %}{% endblock body %}</layoutbody>
 
-
+    
     <hr class="footer-separator">
 
+    <!-- футер с различной информации о сайте -->
     <footer class="mobile-footer">
         <img class="footer-icon" src="{% static "shop/pics/icon.ico" %}" alt="">
         <p class="footer-contact">Email: support@zipwear.store</p>
@@ -50,6 +64,7 @@
         <p class="footer-bottom">&copy; 2025 Void shop</p>
     </footer>
 
+    <!-- подключаем js для кнопок и другой логики через статику -->
     <script src="{% static "shop/layout.js" %}"></script>
       
 </body>

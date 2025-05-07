@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&display=swap');
+
+header {
+    width: 100%;
+    height: 7vh;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2vw;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #131627;
+}
+* {
+    font-family: 'Baloo Bhaijaan 2';
+}
+
+.category_bar,
+.search_bar,
+.sort_bar {
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    height: 80%;
+    transition: 0.5s ease;
+    
+}
+
+
+
+.category_bar, .sort_bar {
+    width: 15%;
+    justify-content: center;
+    position: relative;
+}
+
+.search_bar {
+    flex-grow: 1;
+    margin: 0 2vw;
+    justify-content: center;
+    border: solid 1.7px rgba(255, 255, 255, 0.791);
+}
+
+.search_icon, .category_icon {
+    height: 80%;
+}
+.sort_icon {
+    height: 85%;
+}
+
+#search_field {
+    height: 80%;
+    background-color: rgba(178, 34, 34, 0);
+    border: none;
+    width: 90%;
+    margin-left: 10px;
+    font-size: x-large;
+    border-radius: 15px;
+    outline: none;
+    color: aliceblue;
+}
+
+#search_field::placeholder {
+    font-size: x-large;
+}
+
+
+.categories {
+    position: fixed; /* или absolute */
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    background-color: black;
+    display: none;
+}
+.cross_categories_menu_icon {
+    width: 6vh;
+    position: relative;
+    margin: 3vh;
+    transition: 0.5s ease;
+}
+
+.sortings {
+    position: absolute;
+    top: 0;       
+    right: 0;        
+    display: none;
+    background-color: #131627;
+    border: 1px solid rgba(255, 255, 255, 0.677);
+    border-radius: 15px;
+    width: 44vw;
+    height: 25vh;
+    z-index: 999;
+}
+
+.cross_sortings_menu_icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: 5vh;
+}
+
+.footer-separator {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 30px auto 20px;
+    width: 80%;
+  }
+  
+  .mobile-footer {
+    color: #ffffffc8;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 0.95rem;
+  }
+  
+  .footer-contact {
+    margin: 6px 0;
+  }
+  
+  .footer-contact a {
+    color: rgba(255, 255, 255, 0.773);
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #aaaaaab4;
+  }
+  .footer-icon {
+    width: 100px;
+    opacity: 0.8;
+  }
+
+
