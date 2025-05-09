@@ -13,23 +13,16 @@
     <!-- блок с продуктами -->
     <div class="products_block">
         <!-- блок отдельного продукта -->
-        <div class="product">
-            <img class="product_photo" src="{% static "shop/pics/base_shirts/shirt1.avif" %}" alt="">
-            <h2 class="product_price_tag">6399₽</h2>
-            <h3 class="product_name_tag">Nike Academy
-                Men's Dri-FIT </h3>
+        {% for product in products_querry_set %}
+        <div class="product" onclick="redirectToPage('{% url "inspect" id=product.id %}')">
+            <img class="product_photo" src="{{ media_url }}{{ product.main_photo }}" alt="">
+            <h2 class="product_price_tag">{{ product.price }}₽</h2>
+            <h3 class="product_name_tag">{{ product.name }}</h3>
         </div>
-
-        <div class="product">
-            <img class="product_photo" src="{% static "shop/pics/base_shirts/shirt2.avif" %}" alt="">
-            <h2 class="product_price_tag">3399₽</h2>
-            <h3 class="product_name_tag">Jordan Flight Essentials 85</h3>
-        </div>
-        <div class="product">
-            <img class="product_photo" src="{% static "shop/pics/base_shirts/shirt3.avif" %}" alt="">
-            <h2 class="product_price_tag">8700₽</h2>
-            <h3 class="product_name_tag">F.C. Barcelona 2024/25 Stadium Home</h3>
-        </div>
+        {% endfor %}
     </div>
+    
+    <!-- подключаю основной js скрипт -->
+    <script src="{% static "shop/index.js" %}"></script>
 {% endblock body %}
 

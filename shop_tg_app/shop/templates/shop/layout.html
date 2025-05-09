@@ -43,7 +43,7 @@
             </div>
         </div>
         {% else %} 
-            <div class="main_page_bar">
+            <div class="main_page_bar" onclick="redirectToPage('{% url "main" %}')">
                 <img class="main_page_icon" src="{% static "shop/pics/icon.ico" %}" alt="return to home page" >
             </div>
             {% endif %}

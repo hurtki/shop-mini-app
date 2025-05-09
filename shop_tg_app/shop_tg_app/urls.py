@@ -29,5 +29,4 @@ urlpatterns = [
     # путь к просомтру главной страницы, принимает праметр в url
     path('inspect/<int:id>/', InspectPageView.as_view(), name="inspect"),
     # путь к странице поиска, принимает параметры 
-    path('search/', SearchPageView.as_view())]
-+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('search/', SearchPageView.as_view())] +static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
