@@ -1,8 +1,9 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
+from mptt import models as MPTTModels 
 
-class Category(models.Model):
+class Category(MPTTModels.MPTTModel):
     """
     класс модели категории / реализутся иерархия категорий
     """
@@ -10,7 +11,7 @@ class Category(models.Model):
     name = models.CharField(max_length=20)
     
     # родительская категория, если она есть
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    parent = MPTTModels.TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     
     # важность категории, от этого будет зависеть порядок их показа в меню, чем больше тем важннее!
     priority = models.IntegerField(validators=[
@@ -22,6 +23,10 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def clean(self):
+        if self.parent and self.parent.parent:
+            raise ValidationError("Нельзя создавать категории глубже двух уровней")
 
 class ProductStock(models.Model):
     """

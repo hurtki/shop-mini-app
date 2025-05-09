@@ -20,10 +20,55 @@
     <header>
         <!-- блок с икнокной катгории через который вызвается окно выбора категории-->
         <div class="category_bar" id="category_icon_div">
-            <img  class="category_icon" src="{% static "shop/pics/category_icon.svg" %}" alt="category pick">
+            <img  class="category_icon" id="category_icon" src="{% static "shop/pics/category_icon.svg" %}" alt="category pick" onclick="toggleCategories()">
+            <!-- функция для смены икноки категории -->
+            <script>
+                function changeCategoryIcon() {
+                  const img = document.getElementById("category_icon");
+                  const first_src = '{% static "shop/pics/cross_icon.svg" %}';
+                  const second_src = '{% static "shop/pics/category_icon.svg" %}';
+              
+                  if (img.src.endsWith("cross_icon.svg")) {
+                    img.src = second_src;
+                  } else {
+                    img.src = first_src;
+                  }
+                }
+              </script>              
             <!-- меню категорий / изначально скрыто -->
-            <div class="categories">  
-                <img class="cross_categories_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
+            <div class="categories" id="categories">  
+                
+                
+                <!-- выбор категори -->
+                <ul class="categories_pick">
+                    {% for category in categories %}
+                        <li>
+                            <p class="parent_category_name"
+                               {% if category.get_children %}
+                                   onclick="toggleChildren(event)"
+                                   data-category-id="{{ category.id }}"
+                               {% else %}
+                                   onclick="redirectToProductsPage({{ category.id }}, '{{ base_url }}')"
+                               {% endif %}
+                            >
+                                {{ category.name }}
+                            </p>
+                
+                            {% if category.get_children %}
+                                <ul class="child_categories hidden" data-parent-id="{{ category.id }}">
+                                    {% for child in category.get_children %}
+                                        <p class="child_category_name"
+                                           onclick="redirectToProductsPage({{ child.id }}, '{{ base_url }}')">
+                                            {{ child.name }}
+                                        </p>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                
             </div>
         </div>
         <!-- блок для поиска по продтукам -->
@@ -35,11 +80,11 @@
         <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
         <!-- делаем возможность убирать блок если на странице нету сортировки -->
         {% if show_sort_bar %}
-        <div class="sort_bar" id="sort_icon_div" onclick="toggleSort()">
-            <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick" >
+        <div class="sort_bar" id="sort_icon_div">
+            <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick" onclick="toggleSort()">
             <!-- меню сортировок / изначально скрыто -->
             <div class="sortings" id="sortings"> 
-                <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
+                <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="" onclick="toggleSort()">
             </div>
         </div>
         {% else %} 

@@ -6,87 +6,75 @@ from django.db.models import OuterRef, Subquery, Value
 from django.db.models.functions import Concat
 from django.db.models import ImageField
 from django.conf import settings
+from django.views.generic import TemplateView
+from .mixins import BaseContextMixin
 
-
-# класс для передачи категорий в шаблон
-class LayoutView(View):
-    def get_context_data(self, **kwargs) -> dict[str, any]:
-        context = super().get_context_data(**kwargs)
-        
-        return context
-    
 
 # страница которая ест параметры и выдает по ним продукты 
 # обязательная категория, сортировка дефолтная по новизне 
-class ProductsPageView(LayoutView):
-    def get(self, request):
-    
-        context = {
-            "show_sort_bar": True,
-            "media_url": settings.MEDIA_URL,
-            'base_url': request.get_host(),
-        }
-        # сначала мы должны получить параметры запроса если чегото нету то вернуть ошибку
+class ProductsPageView(BaseContextMixin, TemplateView):
+    template_name = "shop/index.html"
+    allowed_sorts = ["created_at", 'price']
 
-        category_param = request.GET.get("category")  # получаем переданный id категории 
-        sort_param = request.GET.get("sort") 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        request = self.request
+        category_param = request.GET.get("category")
+        sort_param = request.GET.get("sort")
         
         if not (category_param and sort_param):
-            return HttpResponseBadRequest("no params: category, sort")
-        # список доступных сортировок 
-        allowed_sorts = ["created_at", 'price', 'price']
-        # получаем все категории, у которых нет дочерних
-        categories_id_without_children = Category.objects.filter(children__isnull=True).values_list("id", flat=True)
+            raise ValueError("no params: category, sort")
         
-        # валидируем
+        if (not category_param.isdigit()) or (sort_param not in self.allowed_sorts):
+            raise ValueError("wrong params")
         
-        if (not category_param.isdigit()) or (sort_param not in allowed_sorts):
-            return HttpResponseBadRequest("wrong params")
-    
-        # преобразуем категорию в айдишник 
         category_id = int(category_param)
+        categories_id_without_children = Category.objects.filter(
+            children__isnull=True
+        ).values_list("id", flat=True)
         
         if category_id not in categories_id_without_children:
-            return HttpResponseBadRequest("bad category given")
-        # получили все продукты по категории и отсортировнные 
+            raise ValueError("bad category given")
         
-
-        # Подзапрос на фото с наивысшим приоритетом
         photo_subquery = ProductPhoto.objects.filter(
             product=OuterRef('pk')
         ).order_by('-priority').values('image')[:1]
-
         
-        # Аннотируем к каждому продукту ссылку на картинку
         products = Product.objects.filter(category__id=category_id).annotate(
             main_photo=Subquery(photo_subquery)
         ).order_by(sort_param)
 
+        # Базовый layout-контекст
+        context.update({
+            "show_sort_bar": True,
+            "products_querry_set": products
+        })
         
-        context["products_querry_set"] = products.all()
-        
-        return render(request, "shop/index.html", context)
-        
+        return context
+
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except ValueError as e:
+            return HttpResponseBadRequest(str(e))
     
     
 
 # страница с категориями
-class InspectPageView(LayoutView):
-    def get(self, request, id):
-        # здесь у нас будет уже id полученный из url 
+class InspectPageView(BaseContextMixin, TemplateView):
+    template_name = "shop/inspect.html"
     
-        # получаем ссылки на фотографии, название продукта 
-        # дальше ищем productstock и передаем уже итоговое значение есть или нет для кажого размера 
-        
-        
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
 
         
-        
-        context = {
-            "show_sort_bar": False,
-        }
-        
-        return render(request, template_name="shop/inspect.html", context=context)
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except ValueError as e:
+            return HttpResponseBadRequest(str(e))
     
     
 
@@ -94,16 +82,35 @@ class InspectPageView(LayoutView):
 
 # сюда ничего не будет передаваться, просто продукты отсортировнные по новизне первые 10
 # не будет плашки сортировки 
-class MainPageView(View):
-    def get(self, request):
-        pass
+class MainPageView(BaseContextMixin, TemplateView):
+    template_name = "shop/index.html"
+    
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+        
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except ValueError as e:
+            return HttpResponseBadRequest(str(e))
 
 
 # сюда будет в параметрах передаваться строка  что искалась и в шаблон продукта будут возвращаться продукты по поиску 
 # плюс будет передаваться сортировка 
 # категория передаваться не будет 
 
-class SearchPageView(View):
+class SearchPageView(BaseContextMixin, TemplateView):
+    template_name = "shop/index.html"
     
-    def get(self, request):
-        pass
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs)
+
+        
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except ValueError as e:
+            return HttpResponseBadRequest(str(e))
