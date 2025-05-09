@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category
+from .models import Product, Category, ProductPhoto
 from django.views import View
 from django.http import HttpResponseBadRequest
+from django.db.models import OuterRef, Subquery, Value
+from django.db.models.functions import Concat
+from django.db.models import ImageField
+from django.conf import settings
 
 
 # класс для передачи категорий в шаблон
@@ -16,15 +20,14 @@ class LayoutView(View):
 # обязательная категория, сортировка дефолтная по новизне 
 class ProductsPageView(LayoutView):
     def get(self, request):
-        params = request.get("")
-    
-    
     
         context = {
             "show_sort_bar": True,
+            "media_url": settings.MEDIA_URL,
+            'base_url': request.get_host(),
         }
         # сначала мы должны получить параметры запроса если чегото нету то вернуть ошибку
-        
+
         category_param = request.GET.get("category")  # получаем переданный id категории 
         sort_param = request.GET.get("sort") 
         
@@ -35,7 +38,8 @@ class ProductsPageView(LayoutView):
         # получаем все категории, у которых нет дочерних
         categories_id_without_children = Category.objects.filter(children__isnull=True).values_list("id", flat=True)
         
-        # валидируем 
+        # валидируем
+        
         if (not category_param.isdigit()) or (sort_param not in allowed_sorts):
             return HttpResponseBadRequest("wrong params")
     
@@ -45,11 +49,22 @@ class ProductsPageView(LayoutView):
         if category_id not in categories_id_without_children:
             return HttpResponseBadRequest("bad category given")
         # получили все продукты по категории и отсортировнные 
-        products = Product.objects.filter(category__id=category_id).order_by(sort_param)
         
-        context["products"] = products
-        print(context)
 
+        # Подзапрос на фото с наивысшим приоритетом
+        photo_subquery = ProductPhoto.objects.filter(
+            product=OuterRef('pk')
+        ).order_by('-priority').values('image')[:1]
+
+        
+        # Аннотируем к каждому продукту ссылку на картинку
+        products = Product.objects.filter(category__id=category_id).annotate(
+            main_photo=Subquery(photo_subquery)
+        ).order_by(sort_param)
+
+        
+        context["products_querry_set"] = products.all()
+        
         return render(request, "shop/index.html", context)
         
     
@@ -80,7 +95,8 @@ class InspectPageView(LayoutView):
 # сюда ничего не будет передаваться, просто продукты отсортировнные по новизне первые 10
 # не будет плашки сортировки 
 class MainPageView(View):
-    pass
+    def get(self, request):
+        pass
 
 
 # сюда будет в параметрах передаваться строка  что искалась и в шаблон продукта будут возвращаться продукты по поиску 
@@ -88,4 +104,6 @@ class MainPageView(View):
 # категория передаваться не будет 
 
 class SearchPageView(View):
-    pass
+    
+    def get(self, request):
+        pass
