@@ -15,7 +15,7 @@
 
 .product {
     width: 44vw;
-    height: 35vh;
+    height: 57vw;
     position: relative;
     margin-top: 5vw;
     display: flex;
@@ -26,12 +26,14 @@
 .product_photo {
     width: 100%;
     flex-grow: 1;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-radius: 15px;
     object-fit: cover;
     min-height: 30%;
     object-position: top;
 }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 .product_price_tag {
     margin: 0;
@@ -39,12 +41,15 @@
     margin-block: 0;
     padding: 0;
     font-size: medium;
+    
+    font-weight: 800;
 }
 
 .product_name_tag {
-    font-size: large;
+    font-size: 16px;
     margin: 0;
     color: rgb(147, 149, 149);
     line-height: 1;
+    font-weight: 700;
     
 }

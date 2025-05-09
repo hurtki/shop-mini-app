@@ -65,12 +65,20 @@ class Product(models.Model):
     # пока что не оченб понятно как будет сделанно имя но пусть будет 
     name = models.CharField(max_length=50)
     
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=500, null=True, blank=True)
     
     # возможные размеры продукта 
     sizes = models.ManyToManyField("Size", related_name="products_with_size")
     
-    #здест вообще должен быть список путей к фотграфиям продукта, но пока что не понятно как реализовыывать 
+    # цена продукта 
+    price = models.IntegerField(validators=[
+        MinValueValidator(0),
+        MaxValueValidator(100000)
+    ], default=0)
+    
+    
+    # когда был создан продукт 
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.name

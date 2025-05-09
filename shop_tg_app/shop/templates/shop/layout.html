@@ -33,6 +33,8 @@
             <input type="text" name="search_field" id="search_field" placeholder="Я ищу..">
         </div>
         <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
+        <!-- делаем возможность убирать блок если на странице нету сортировки -->
+        {% if show_sort_bar %}
         <div class="sort_bar" id="sort_icon_div" onclick="toggleSort()">
             <img class="sort_icon" src="{% static "shop/pics/sort_icon.svg" %}" alt="sort_pick" >
             <!-- меню сортировок / изначально скрыто -->
@@ -40,6 +42,11 @@
                 <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="">
             </div>
         </div>
+        {% else %} 
+            <div class="main_page_bar">
+                <img class="main_page_icon" src="{% static "shop/pics/icon.ico" %}" alt="return to home page" >
+            </div>
+            {% endif %}
     </header>
     
     

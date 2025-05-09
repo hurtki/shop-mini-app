@@ -7,13 +7,39 @@
 }
 
 .name_tag {
-  font-size: 400%;
+  font-size: 40px;
   color: whitesmoke;
   margin-block: 0;
-  margin-top: 1%;
-  margin-bottom: 0%;
+  margin: 1vh;
+  margin-top: 1.9vh;
+
   font-weight: bolder;
-  padding-bottom: 0;
+
+  line-height: 1;
+  
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+.price_tag {
+
+  color: rgb(203, 215, 215);
+  margin-block: 0 !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  width: fit-content;
+  text-align: left !important;
+  position: relative;
+
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 800;
+  font-size: 190%;
+  left: 3vw;
+  line-height: 100%;
+  letter-spacing: 0%;
   
 }
 
@@ -41,13 +67,25 @@ layoutbody {
 }
 
 .swiper-pagination {
-  font-size: xx-large;
+  font-size: x-large;
+  font-weight: 900;
+  text-align: left !important;
+  position: absolute;
+  left: 5px !important;
+  top: 5px !important;
+  background-color: #8686868f;
+  border-radius: 20px;
+  height: fit-content !important; 
+  width: fit-content !important;
+  padding: 4px !important;
+  line-height: 1.1;
+
 }
 
 .size-picker label {
   background-color: #222;
   color: #eee;
-  padding: 20px 45px;
+  padding: 15px 30px;
   border: 2px solid #666;
   border-radius: 8px;
   cursor: pointer;

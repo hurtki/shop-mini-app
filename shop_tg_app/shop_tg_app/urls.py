@@ -16,14 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from shop.views import main_page, inspect_page
+from shop.views import MainPageView, InspectPageView, ProductsPageView, SearchPageView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # путь к главной странице 
-    path('', main_page, name="main"),
-    # путь к просомтру главной страницы 
-    path('inspect', inspect_page)
-]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # путь к главной странице, не принимает парметров
+    path('', MainPageView.as_view(), name="main"),
+    # путь к странице с сортировкой и фильтрацией, принмает параметры 
+    path('products/', ProductsPageView.as_view(), name="products"),
+    # путь к просомтру главной страницы, принимает праметр в url
+    path('inspect/<int:id>/', InspectPageView.as_view(), name="inspect"),
+    # путь к странице поиска, принимает параметры 
+    path('search/', SearchPageView.as_view())]
++static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
