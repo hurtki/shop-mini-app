@@ -6,11 +6,11 @@ function toggleSort() {
     input.style.display = "block";
     const sort = params.get('sort'); 
 
-    const selector = sort ? `.sort${sort}` : `.sortcreated_at`;
+    const selector = sort ? `.sort${sort}` : `.sort-created_at`;
     const el = document.querySelector(selector);
 
     
-    el.style.border = "ак2px solid white";
+    el.style.border = "2px solid white";
 
     input.style.zIndex = 999;
   } else {
@@ -73,7 +73,6 @@ function redirectToProductsPageBySort(sort) {
     redirectToPage(new_url);
   }
 }
-
 
 
 function toggleChildren(event) {
