@@ -1,8 +1,17 @@
 function toggleSort() {
   const input = document.getElementById("sortings");
+  const params = new URLSearchParams(window.location.search);
 
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
+    const sort = params.get('sort'); 
+
+    const selector = sort ? `.sort${sort}` : `.sortcreated_at`;
+    const el = document.querySelector(selector);
+
+    
+    el.style.border = "2px solid white";
+
     input.style.zIndex = 999;
   } else {
     input.style.display = "none";
@@ -13,7 +22,9 @@ function toggleSort() {
 
 function toggleCategories() {
   const input = document.getElementById("categories");
-
+  
+  
+  
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
     input.style.zIndex = 999;
@@ -74,3 +85,5 @@ function toggleChildren(event) {
       childList.classList.toggle('hidden');
   }
 }
+
+

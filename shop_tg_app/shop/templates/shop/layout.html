@@ -86,18 +86,17 @@
             <!-- меню сортировок / изначально скрыто -->
             <div class="sortings" id="sortings"> 
                 <div class="sortings_header">
-                    <div class="last_sort" data-sort="created_at" onclick="redirectToProductsPageBySort('-created_at')">Последнее</div>
+                    <div class="sort-created_at" data-sort="created_at" onclick="redirectToProductsPageBySort('-created_at')">Последнее</div>
                     <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="" onclick="toggleSort()">
                 </div>
-                <div class="from_expensive_to_cheap_sort" onclick="redirectToProductsPageBySort('-price')">От дорогого к дешевому</div>
-                <div class="from_cheap_to_expensive_sort" onclick="redirectToProductsPageBySort('price')">От дешевого к дорогому</div>
+                <div class="sort-price" onclick="redirectToProductsPageBySort('-price')">От дорогого к дешевому</div>
+                <div class="sortprice" onclick="redirectToProductsPageBySort('price')">От дешевого к дорогому</div>
             </div>
         </div>
         {% else %} 
-            <div class="main_page_bar" onclick="redirectToPage('{% url "main" %}')">
-                <img class="main_page_icon" src="{% static "shop/pics/icon.ico" %}" alt="return to home page" >
+            <div class="main_page_bar">
             </div>
-            {% endif %}
+        {% endif %}
     </header>
     
     

@@ -1,3 +1,6 @@
+
+
+
 * {
     box-sizing: border-box;
 }
@@ -17,7 +20,7 @@
     width: 44vw;
     height: 57vw;
     position: relative;
-    margin-top: 5vw;
+    margin-top: 4vw;
     display: flex;
     flex-direction: column;
     overflow:hidden;
@@ -33,23 +36,24 @@
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
+
 
 .product_price_tag {
     margin: 0;
-    color: rgb(203, 215, 215);
     margin-block: 0;
     padding: 0;
+    color: rgb(203, 215, 215);
     font-size: medium;
-    
-    font-weight: 800;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 700; 
 }
 
 .product_name_tag {
     font-size: 16px;
     margin: 0;
+    
     color: rgb(147, 149, 149);
     line-height: 1;
-    font-weight: 700;
+    font-weight: 600;
     
 }

@@ -120,6 +120,8 @@ class MainPageView(BaseContextMixin, TemplateView):
 
         context.update({
             "products_querry_set": top_products,
+            "show_sort_bar": True,
+            
         })
 
         return context

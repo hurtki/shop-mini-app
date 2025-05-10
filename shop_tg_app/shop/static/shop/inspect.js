@@ -41,13 +41,13 @@ function handleBuyButton(product_id, product_price, product_name, username) {
     else {
         warning.style.display = "none";
         const message = 
-`Здравствуйте! Хотел бы купить товар:
-- Название: ${product_name}
-- Цена: ${product_price}₽
-- Размер: ${selectedSize}
-- Артикул: ${product_id}
+`👋 Здравствуйте! Хотел бы купить товар:
+🛍️ Название: ${product_name}
+💸 Цена: ${product_price}₽
+📏 Размер: ${selectedSize}
+🆔 Артикул: ${product_id}
 
-Можете помочь с заказом?`;
+📦 Можете помочь с заказом?`;
 
         // Генерируем ссылку для Telegram
         const telegramLink = generateTelegramLink(username, message.trim());
@@ -57,6 +57,33 @@ function handleBuyButton(product_id, product_price, product_name, username) {
 
         
     }
-
-    
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (!window.Telegram || !window.Telegram.WebApp) {
+    console.warn('Telegram WebApp API недоступен');
+    return;
+  }
+
+  const tg = window.Telegram.WebApp;
+
+  // 🔑 Инициализируем WebApp
+  tg.ready(); // <-- без этого BackButton не отобразится
+
+  // Показываем кнопку "Назад"
+  tg.BackButton.show();
+
+  // Обработка нажатия
+  tg.BackButton.onClick(() => {
+    console.log('Нажата кнопка назад');
+
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      tg.close();
+    }
+  });
+
+  // Разворачиваем WebApp
+  tg.expand();
+});

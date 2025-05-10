@@ -21,11 +21,7 @@
 
 
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-
 .price_tag {
-
   color: rgb(203, 215, 215);
   margin-block: 0 !important;
   margin-top: 10px !important;
@@ -33,13 +29,12 @@
   width: fit-content;
   text-align: left !important;
   position: relative;
-
   font-family: "Montserrat Alternates", sans-serif;
   font-weight: 800;
   font-size: 190%;
   left: 3vw;
   line-height: 100%;
-  letter-spacing: 0%;
+  letter-spacing: 0%; 
   
 }
 

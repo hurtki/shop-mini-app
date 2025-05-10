@@ -1,9 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&family=Montserrat+Alternates:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
+
+
+:root {
+    --background-color: #111216;
+    --text-color-bright: white;
+    --text-color-dim: rgba(255, 255, 255, 0.712);
+    --parent-category-color: #131627;
+    --child-category-color: rgb(32, 37, 63);
+    --footer-separator-color: #444;
+}
+
+
+
+
+
+body {
+    background-color: var(--background-color);
+}
+* {
+    font-family: 'Baloo Bhaijaan 2';
+    box-sizing: border-box;
+}
+
+html, body {
+    overscroll-behavior: none;
+}
+
 
 header {
     width: 100%;
     height: 50px;
     left: 0;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -11,17 +42,6 @@ header {
     box-sizing: border-box;
 }
 
-body {
-    background-color: #131627;
-}
-* {
-    font-family: 'Baloo Bhaijaan 2';
-}
-
-html, body {
-    overscroll-behavior: none;
-  }
-  
 
 .category_bar,
 .search_bar,
@@ -29,13 +49,58 @@ html, body {
     display: flex;
     align-items: center;
     border-radius: 15px;
-    height: 80%;
+    height: 45px;
     transition: 0.5s ease;
     
 }
 
+.category_bar, .sort_bar, .main_page_bar {
+    width: 15%;
+    justify-content: center;
+    position: relative;
+}
+
+.search_bar{
+    margin-left: 5px;
+    flex-grow: 1;
+    justify-content: center;
+    border: solid 1.7px var(--text-color-dim);
+}
+
+.search_icon, .category_icon {
+    height: 100%;
+}
+
+.sort_icon, .main_page_icon {
+    height: 100%;
+}
+
+.main_page_icon {
+    border-radius: 10px;
+}
+
+#search_field {
+    width: 75%;
+    margin-right: 3px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    color: var(--text-color-bright);
+    font-size: 20px;
+    outline: none;
+    
+    font-family: 'Baloo Bhaijaan 2';
+}
+
+
+
+
+#search_field::placeholder {
+    font-size: 20px;
+}
+
+
 ul, li, strong {
-    color: antiquewhite;
+    color: var(--text-color-bright);
     padding-left: 0;
     list-style-type: none;
     width: fit-content;
@@ -45,7 +110,7 @@ ul, li, strong {
 li { 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрирует дочерние элементы по горизонтали */
+    align-items: center; 
     padding: 0px 0;
     width: 100%;
     margin: 5px;
@@ -56,63 +121,24 @@ li {
 }
 
 
-.category_bar, .sort_bar {
-    width: 15%;
-    justify-content: center;
-    position: relative;
-}
 
-.search_bar{
-    height: 70%;
-    flex-grow: 1;
-    margin: 0 2vw;
-    justify-content: center;
-    border: solid 1.7px rgba(255, 255, 255, 0.791);
-}
-
-.search_icon, .category_icon {
-    height: 80%;
-}
-.sort_icon, .main_page_icon {
-    height: 100%;
-}
-
-.main_page_icon {
-    border-radius: 10px;
-}
-
-#search_field {
-    height: 80%;
-    background-color: rgba(178, 34, 34, 0);
-    border: none;
-    width: 90%;
-    margin-left: 10px;
-    font-size: 1.5rem; /* или 16px */
-    outline: none;
-    color: aliceblue;
-    padding: 0 10px; /* Добавь немного внутреннего отступа для комфортного ввода */
-}
-
-#search_field::placeholder {
-    font-size: 1.5rem;
-}
 
 
 .categories {
-    position: fixed; /* или absolute */
+    position: fixed;
     top: 0;
     right: 0;
     height: 100%;
     width: 50%;
-    background-color: black;
+    background-color: var(--background-color);
     display: none;
-    border-left: solid white 1px;
+    border-left: solid var(--text-color-dim) 1px;
 }
 
 .categories_pick {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центрирует дочерние элементы по горизонтали */
+    align-items: center; 
     padding: 0px 0;
     width: 100%;
 }
@@ -120,7 +146,7 @@ li {
 
 
 .parent_category_name {
-    background-color: #131627;
+    background-color: var(--parent-category-color);
     border-radius: 15px;
     width: 42.5vw;
     padding: 5px;
@@ -128,7 +154,7 @@ li {
 }
 
 .child_category_name {
-    background-color:rgb(32, 37, 63);
+    background-color: var(--child-category-color);
     border-radius: 15px;
     width: 32.5vw;
     position: relative;
@@ -139,8 +165,8 @@ li {
     top: 0;       
     right: 0;        
     display: none;
-    background-color: #131627;
-    border: 1px solid rgba(255, 255, 255, 0.677);
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color-dim);
     border-radius: 15px;
     width: 44vw;
     height: fit-content;
@@ -156,15 +182,15 @@ li {
     align-items: center;
 }
 
-.last_sort {
+.sort-created_at {
     flex-grow: 1;
     display: flex;
     align-items: center;      /* вертикальное центрирование */
     justify-content: center;  /* горизонтальное */
     text-align: center;
-    background-color: #1e2444;
+    background-color: var(--parent-category-color);
     height: 5vh;
-    color: rgb(255, 255, 255);
+    color: var(--text-color-bright);
     border-radius: 15px;
     margin: 5px;
     margin-bottom: 0;
@@ -177,14 +203,14 @@ li {
     cursor: pointer;
 }
 
-.from_expensive_to_cheap_sort, 
-.from_cheap_to_expensive_sort {
+.sort-price, 
+.sortprice {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #1e2444;
+    background-color: var(--parent-category-color);
     border-radius: 15px;
-    color: rgb(255, 255, 255);
+    color: var(--text-color-bright);
     height: fit-content;
     text-align: center;
     margin: 5px;
@@ -192,13 +218,13 @@ li {
 
 .footer-separator {
     border: none;
-    border-top: 1px solid #444;
+    border-top: 1px solid var(--footer-separator-color);
     margin: 30px auto 20px;
     width: 80%;
   }
   
   .mobile-footer {
-    color: #ffffffc8;
+    color: var(--text-color-bright);
     text-align: center;
     padding: 20px 10px;
     font-size: 0.95rem;
@@ -209,14 +235,14 @@ li {
   }
   
   .footer-contact a {
-    color: rgba(255, 255, 255, 0.773);
+    color: var(--text-color-dim);
     text-decoration: underline;
   }
   
   .footer-bottom {
     margin-top: 15px;
     font-size: 0.85rem;
-    color: #aaaaaab4;
+    color: var(--footer-separator-color);
   }
   .footer-icon {
     width: 100px;
