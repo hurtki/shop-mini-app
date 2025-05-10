@@ -27,17 +27,31 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+
+
+# статические файлы 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
-# указываем базовые папки для хранения медиа файлов 
+# базовые папки для хранения медиа  
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
+# юзернейм продавца 
+# туда перекидывает когда кто-то нажимает кнопку купить 
 TG_USERNAME = "@Cleomente"
-# Application definition
+# доступные соротировки 
+ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
+
+
+# ограничения размера строки по которой ищутся продукты 
+MAX_SEARCH_CHARACTERS = 15
+MIN_SEARCH_CHARACTERS = 3
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://3bb8-5-28-190-219.ngrok-free.app',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
+    # библиотека для создания деревьев, реализуем категории для эффективной выборки их дерева 
     'mptt',
 ]
 
@@ -122,10 +137,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

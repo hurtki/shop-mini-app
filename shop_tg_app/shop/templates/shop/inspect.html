@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+    <!-- подключаем sdk telegramm mini app -->
+    <script src="{% static "shop/tg-mini-app-bundle.js" %}"></script>
+
+    
 {% endblock head %}
     
 {% block body %}
@@ -21,6 +25,9 @@
         {% for photo in product_photos %}
             <div class="swiper-slide"><img class="slider_image" src="{{ photo.image.url }}" /></div>
         {% endfor %}
+        {% if not product_photos %}
+            <div class="swiper-slide"><img class="slider_image" src="{% static "shop/pics/no_image_available.jpg" %}" /></div>
+        {% endif %}
 
         </div> 
         <!-- Кружочки -->
@@ -28,12 +35,14 @@
     </div>
     <h2 class="price_tag">{{ product.price }}₽</h2>
     <!-- выбор размера -->
+
+    <!-- <a href="{% url "main" %}">тестовая ссылка домой</a> -->
     <div class="size-picker">
         <!-- один из размеров-->
         {% for size in able_sizes %}
             {% if not sizes_availability|get_item:size.id %}
                 <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}" disabled>
-                <label for="size-{{ size.name }}" class="size-label unavailable">
+                <label for="size-{{ size.name }}" class="size-label_unavailable">
                     {{ size.name }}
                     <img src="{% static "shop/pics/cross_icon.svg" %}" class="overlay-cross" alt="">
                 </label>

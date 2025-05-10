@@ -1,3 +1,18 @@
+function getNoSizeMessage(product_name, product_price, product_id) {
+    return `👋 Здравствуйте! Хотел бы купить товар:
+🛍️ Название: ${product_name}
+💸 Цена: ${product_price}₽
+🆔 Артикул: ${product_id}`;
+}
+
+function getSizeMessage(product_name, product_price, selectedSize, product_id) {
+    return `👋 Здравствуйте! Хотел бы купить товар:
+🛍️ Название: ${product_name}
+💸 Цена: ${product_price}₽
+📏 Размер: ${selectedSize}
+🆔 Артикул: ${product_id}`;
+}
+
 // скрипт для свайпера 
 const swiper = new Swiper('.swiper', {
 loop: true, //  без автолистания
@@ -31,59 +46,40 @@ function generateTelegramLink(username, message) {
 
 function handleBuyButton(product_id, product_price, product_name, username) {
     const sizeRadios = document.querySelectorAll('input[name="size"]');
-    const warning = document.getElementById("size_pick_warning");
     selectedSize = getSelectedSize(sizeRadios);
+    
+    // если не выбран размер то дефолтное сообщение подставляем
+    const message = selectedSize
+        ? getSizeMessage(product_name, product_price, selectedSize, product_id)
+        : getNoSizeMessage(product_name, product_price, product_id);
 
-    if (!selectedSize) {
-        warning.style.display = "block";
-        
-    }
-    else {
-        warning.style.display = "none";
-        const message = 
-`👋 Здравствуйте! Хотел бы купить товар:
-🛍️ Название: ${product_name}
-💸 Цена: ${product_price}₽
-📏 Размер: ${selectedSize}
-🆔 Артикул: ${product_id}
+    // Генерируем ссылку для Telegram
+    const telegramLink = generateTelegramLink(username, message.trim());
 
-📦 Можете помочь с заказом?`;
+    // Открываем Telegram с предзаполненным сообщением
+    window.open(telegramLink, "_blank");
 
-        // Генерируем ссылку для Telegram
-        const telegramLink = generateTelegramLink(username, message.trim());
-
-        // Открываем Telegram с предзаполненным сообщением
-        window.open(telegramLink, "_blank");
-
-        
-    }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  if (!window.Telegram || !window.Telegram.WebApp) {
-    console.warn('Telegram WebApp API недоступен');
-    return;
-  }
 
-  const tg = window.Telegram.WebApp;
 
-  // 🔑 Инициализируем WebApp
-  tg.ready(); // <-- без этого BackButton не отобразится
 
-  // Показываем кнопку "Назад"
-  tg.BackButton.show();
+// tg mini app back button logic 
+Telegram.WebApp.ready();
 
-  // Обработка нажатия
-  tg.BackButton.onClick(() => {
-    console.log('Нажата кнопка назад');
 
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      tg.close();
-    }
-  });
-
-  // Разворачиваем WebApp
-  tg.expand();
+// обработчик кнопки назад 
+Telegram.WebApp.onEvent('backButtonClicked', function() {
+  console.log('Back button clicked, entered func on event backButtonClicked');
+  // получаем из session storage предыдущую страницу 
+  const back = sessionStorage.getItem('prevPage') || '/';
+  // прячем кнопку назад 
+  Telegram.WebApp.BackButton.hide();
+  redirectToPage(back);
 });
+
+
+
+// изначально показываем кнопку назад 
+Telegram.WebApp.BackButton.show();
+

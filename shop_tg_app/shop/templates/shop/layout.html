@@ -42,7 +42,7 @@
                 
                 <!-- выбор категори -->
                 <ul class="categories_pick">
-                    <h2 >Категории</h2>
+                    <h2 class="categories_name_tag">Категории</h2>
                     {% for category in categories %}
                         <li>
                             <p class="parent_category_name"
@@ -74,10 +74,10 @@
             </div>
         </div>
         <!-- блок для поиска по продтукам -->
-        <div class="search_bar">
+        <div class="search_bar" id="search_bar" {% if not show_sort_bar %}style="max-width: none;"{% endif %}>
             <img  class="search_icon" src="{% static "shop/pics/search_icon.svg" %}" alt="search">
             <!-- фактический инпут для реализовки поиска-->
-            <input type="text" name="search_field" id="search_field" placeholder="Я ищу.." enterkeyhint="send">
+            <input type="text" maxlength="{{ max_search_characters }}" minlength="{{ min_search_characters }}" name="search_field" id="search_field" placeholder="Я ищу.." enterkeyhint="send">
         </div>
         <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
         <!-- делаем возможность убирать блок если на странице нету сортировки -->
