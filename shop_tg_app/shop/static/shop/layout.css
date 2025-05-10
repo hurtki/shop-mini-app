@@ -137,15 +137,51 @@ li {
     border: 1px solid rgba(255, 255, 255, 0.677);
     border-radius: 15px;
     width: 44vw;
-    height: 25vh;
+    height: fit-content;
     z-index: 999;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* Контейнер для первой строки: "Последнее" и крестик */
+.sortings_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.last_sort {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;      /* вертикальное центрирование */
+    justify-content: center;  /* горизонтальное */
+    text-align: center;
+    background-color: #1e2444;
+    height: 5vh;
+    color: rgb(255, 255, 255);
+    border-radius: 15px;
+    margin: 5px;
+    margin-bottom: 0;
+
 }
 
 .cross_sortings_menu_icon {
-    position: absolute;
-    right: 5px;
-    top: 5px;
     width: 5vh;
+    height: 5vh;
+    cursor: pointer;
+}
+
+.from_expensive_to_cheap_sort, 
+.from_cheap_to_expensive_sort {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1e2444;
+    border-radius: 15px;
+    color: rgb(255, 255, 255);
+    height: 5vh;
+    text-align: center;
+    margin: 5px;
 }
 
 .footer-separator {

@@ -29,7 +29,7 @@ function redirectToPage(url) {
 }
 
 
-function redirectToProductsPage(categoryId, baseUrl) {
+function redirectToProductsPageByCategory(categoryId) {
   const params = new URLSearchParams(window.location.search);
   let sort_param = params.get("sort");
 
@@ -37,23 +37,40 @@ function redirectToProductsPage(categoryId, baseUrl) {
     sort_param = "created_at";
   }
 
-  const new_url = `http://${baseUrl}/products?category=${categoryId}&sort=${sort_param}`;
+  const baseUrl = window.location.origin; // http://127.0.0.1:8000
+  const new_url = `${baseUrl}/products?category=${categoryId}&sort=${sort_param}`;
 
-  window.location.href = new_url;
+  redirectToPage(new_url);
 }
 
-function open_children() {
+function redirectToProductsPageBySort(sort) {
+  const params = new URLSearchParams(window.location.search);
+  let category_param = params.get("category");
+  let search_param = params.get("search");
+  const baseUrl = window.location.origin;
 
+  if (search_param) {
+    // Если есть параметр search, редиректим на /search/
+    const new_url = `${baseUrl}/search/?search=${search_param}&sort=${sort}`;
+    redirectToPage(new_url);
+  } else {
+    // Если параметр search отсутствует, редиректим на /products/
+    if (!category_param) {
+      redirectToPage(baseUrl);
+    }
+    const new_url = `${baseUrl}/products?category=${category_param}&sort=${sort}`;
+    redirectToPage(new_url);
+  }
 }
+
+
 
 function toggleChildren(event) {
-  console.log("зашли в ф");
   const parent = event.target;
   const categoryId = parent.dataset.categoryId;
   const childList = document.querySelector(`ul[data-parent-id='${categoryId}']`);
   
   if (childList) {
-      console.log("test")
       childList.classList.toggle('hidden');
   }
 }
