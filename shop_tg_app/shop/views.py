@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 # обязательная категория, сортировка дефолтная по новизне 
 class ProductsPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
-    allowed_sorts = ["created_at", 'price', '-price']
+    allowed_sorts = ["created_at", 'price', '-price', '-created_at']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,6 +78,8 @@ class InspectPageView(BaseContextMixin, TemplateView):
             stock = ProductStock.objects.filter(product=product, size=size).first()  # Получаем первый объект на складе для этого размера
             sizes_availability[size.id] = stock is not None and stock.quantity > 0  # Если stock есть и количество больше 0, то True
         
+        print(sizes_availability)
+        
         context["sizes_availability"] = dict(sizes_availability) 
         context["able_sizes"] = able_sizes
         context["product"] = product
@@ -102,12 +104,26 @@ class InspectPageView(BaseContextMixin, TemplateView):
 # не будет плашки сортировки 
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
-    
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
 
-        
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Получаем главное фото через подзапрос
+        photo_subquery = ProductPhoto.objects.filter(
+            product=OuterRef('pk')
+        ).order_by('-priority').values('image')[:1]
+
+        # Получаем 10 самых новых продуктов с аннотированным главным фото
+        top_products = Product.objects.annotate(
+            main_photo=Subquery(photo_subquery)
+        ).order_by('-created_at')[:10]
+
+        context.update({
+            "products_querry_set": top_products,
+        })
+
+        return context
+
     def get(self, request, *args, **kwargs):
         try:            
             return super().get(request, *args, **kwargs)
