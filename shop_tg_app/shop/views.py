@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Category, ProductPhoto
+from .models import Product, Category, ProductPhoto, ProductStock
 from django.views import View
 from django.http import HttpResponseBadRequest
 from django.db.models import OuterRef, Subquery, Value
@@ -8,13 +8,13 @@ from django.db.models import ImageField
 from django.conf import settings
 from django.views.generic import TemplateView
 from .mixins import BaseContextMixin
-
+from django.shortcuts import get_object_or_404
 
 # страница которая ест параметры и выдает по ним продукты 
 # обязательная категория, сортировка дефолтная по новизне 
 class ProductsPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
-    allowed_sorts = ["created_at", 'price']
+    allowed_sorts = ["created_at", 'price', '-price']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -66,12 +66,30 @@ class InspectPageView(BaseContextMixin, TemplateView):
     template_name = "shop/inspect.html"
     
     def get_context_data(self, **kwargs):
-        return super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+        product = self.product
+        
+        product_photos = ProductPhoto.objects.filter(product=product).order_by('-priority')
+        able_sizes = product.sizes.all()
+        # Для каждого размера проверяем наличие на складе
+        sizes_availability = {}
+        for size in able_sizes:
+            # Проверяем, есть ли этот размер на складе с количеством > 0
+            stock = ProductStock.objects.filter(product=product, size=size).first()  # Получаем первый объект на складе для этого размера
+            sizes_availability[size.id] = stock is not None and stock.quantity > 0  # Если stock есть и количество больше 0, то True
+        
+        context["sizes_availability"] = dict(sizes_availability) 
+        context["able_sizes"] = able_sizes
+        context["product"] = product
+        context["product_photos"] = product_photos
+        return context
 
         
     
     def get(self, request, *args, **kwargs):
         try:
+            product_id = self.kwargs.get("id")
+            self.product = get_object_or_404(Product, id=product_id)       
             return super().get(request, *args, **kwargs)
         except ValueError as e:
             return HttpResponseBadRequest(str(e))
@@ -91,7 +109,7 @@ class MainPageView(BaseContextMixin, TemplateView):
         
     
     def get(self, request, *args, **kwargs):
-        try:
+        try:            
             return super().get(request, *args, **kwargs)
         except ValueError as e:
             return HttpResponseBadRequest(str(e))
