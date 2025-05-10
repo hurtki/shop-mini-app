@@ -17,6 +17,7 @@ class BaseContextMixin:
             "base_url": self.request.get_host(),
             "show_sort_bar": False,  # по умолчанию
             "categories": categories,
+            "tg_username": settings.TG_USERNAME,
             
             
         })
