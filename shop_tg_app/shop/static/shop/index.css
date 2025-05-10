@@ -44,7 +44,7 @@
     padding: 0;
     color: rgb(203, 215, 215);
     font-size: medium;
-    font-family: 'Montserrat Alternates', sans-serif;
+    font-family: var(--font-2);
     font-weight: 700; 
 }
 

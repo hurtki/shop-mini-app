@@ -10,7 +10,7 @@ function toggleSort() {
     const el = document.querySelector(selector);
 
     
-    el.style.border = "2px solid white";
+    el.style.border = "ак2px solid white";
 
     input.style.zIndex = 999;
   } else {

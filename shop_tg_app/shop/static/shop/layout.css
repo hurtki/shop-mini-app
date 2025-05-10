@@ -11,6 +11,8 @@
     --parent-category-color: #131627;
     --child-category-color: rgb(32, 37, 63);
     --footer-separator-color: #444;
+    --font-1: 'Montserrat Alternates', sans-serif;
+    --font-2: 'Montserrat Alternates', sans-serif;
 }
 
 
@@ -21,7 +23,7 @@ body {
     background-color: var(--background-color);
 }
 * {
-    font-family: 'Baloo Bhaijaan 2';
+    font-family: var(--font-2);
     box-sizing: border-box;
 }
 
@@ -88,7 +90,7 @@ header {
     font-size: 20px;
     outline: none;
     
-    font-family: 'Baloo Bhaijaan 2';
+    font-family: var(--font-1);
 }
 
 
@@ -145,20 +147,32 @@ li {
 
 
 
+h2 {
+    font-weight: 700;
+}
+
 .parent_category_name {
-    background-color: var(--parent-category-color);
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid var(--text-color-dim);
     border-radius: 15px;
     width: 42.5vw;
     padding: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     position: relative;
+    font-weight: 600;
 }
 
 .child_category_name {
-    background-color: var(--child-category-color);
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid var(--text-color-dim);
     border-radius: 15px;
     width: 32.5vw;
     position: relative;
     padding: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-weight: 600;
 }
 .sortings {
     position: absolute;

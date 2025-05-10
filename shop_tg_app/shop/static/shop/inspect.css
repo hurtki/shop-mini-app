@@ -12,9 +12,7 @@
   margin-block: 0;
   margin: 1vh;
   margin-top: 1.9vh;
-
   font-weight: bolder;
-
   line-height: 1;
   
 }
@@ -29,7 +27,7 @@
   width: fit-content;
   text-align: left !important;
   position: relative;
-  font-family: "Montserrat Alternates", sans-serif;
+  font-family: var(--font-1);
   font-weight: 800;
   font-size: 190%;
   left: 3vw;

@@ -42,6 +42,7 @@
                 
                 <!-- выбор категори -->
                 <ul class="categories_pick">
+                    <h2 >Категории</h2>
                     {% for category in categories %}
                         <li>
                             <p class="parent_category_name"
@@ -93,9 +94,6 @@
                 <div class="sortprice" onclick="redirectToProductsPageBySort('price')">От дешевого к дорогому</div>
             </div>
         </div>
-        {% else %} 
-            <div class="main_page_bar">
-            </div>
         {% endif %}
     </header>
     
