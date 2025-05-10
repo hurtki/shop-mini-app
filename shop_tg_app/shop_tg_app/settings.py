@@ -36,6 +36,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
+TG_USERNAME = "@hotlvl"
 # Application definition
 
 INSTALLED_APPS = [

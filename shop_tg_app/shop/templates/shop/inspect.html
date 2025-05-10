@@ -14,7 +14,7 @@
     
 {% block body %}
     
-    <h2 class="name_tag">Zip hoodie Burbry</h2>
+    <h2 class="name_tag">{{ product.name }}</h2>
     <!-- галеррея -->
     <div class="swiper">
         <div class="swiper-wrapper">
@@ -26,23 +26,29 @@
         <!-- Кружочки -->
         <div class="swiper-pagination"></div>
     </div>
-    <h2 class="price_tag">{{ product.price }}</h2>
+    <h2 class="price_tag">{{ product.price }}₽</h2>
     <!-- выбор размера -->
     <div class="size-picker">
         <!-- один из размеров-->
         {% for size in able_sizes %}
-        <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}" 
-        {% if sizes_availability|get_item:size.id == false %}disabled{% endif %}>
-        <label for="size-{{ size.name }}">{{ size.name }}</label>
+            {% if not sizes_availability|get_item:size.id %}
+                <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}" disabled>
+                <label for="size-{{ size.name }}" class="size-label unavailable">
+                    {{ size.name }}
+                    <img src="{% static "shop/pics/cross_icon.svg" %}" class="overlay-cross" alt="">
+                </label>
+            {% else %}
+                <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}">
+                <label for="size-{{ size.name }}" class="size-label">
+                    {{ size.name }}
+                </label>
+            {% endif %}
         {% endfor %}
-        
-        
-        
     </div>
-
+    <h4 class="size_pick_warning" id="size_pick_warning" >Выберите размер</h4>
     <!-- кнопка для сбора всего вместе и перенаправления в чат с нужным сообщением -->
     <div class="contact_seller_container">
-        <button class="contact_seller_button">Приобрести</button>
+        <button class="contact_seller_button" onclick="handleBuyButton({{product.id}}, {{ product.price }}, '{{ product.name }}', '{{ tg_username }}')">Приобрести</button>
       </div>
     <!-- подключаю основной js скрипт -->
     <script src="{% static "shop/inspect.js" %}"></script>

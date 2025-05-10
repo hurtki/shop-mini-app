@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <!-- даем возможность указывать тайтл у наследователей шаблона -->
     <title>{% block title %}{% endblock title %}</title>
     
@@ -75,7 +76,7 @@
         <div class="search_bar">
             <img  class="search_icon" src="{% static "shop/pics/search_icon.svg" %}" alt="search">
             <!-- фактический инпут для реализовки поиска-->
-            <input type="text" name="search_field" id="search_field" placeholder="Я ищу..">
+            <input type="text" name="search_field" id="search_field" placeholder="Я ищу.." enterkeyhint="send">
         </div>
         <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
         <!-- делаем возможность убирать блок если на странице нету сортировки -->
@@ -85,7 +86,7 @@
             <!-- меню сортировок / изначально скрыто -->
             <div class="sortings" id="sortings"> 
                 <div class="sortings_header">
-                    <div class="last_sort" data-sort="created_at" onclick="redirectToProductsPageBySort('created_at')">Последнее</div>
+                    <div class="last_sort" data-sort="created_at" onclick="redirectToProductsPageBySort('-created_at')">Последнее</div>
                     <img class="cross_sortings_menu_icon" src="{% static "shop/pics/cross_icon.svg" %}" alt="" onclick="toggleSort()">
                 </div>
                 <div class="from_expensive_to_cheap_sort" onclick="redirectToProductsPageBySort('-price')">От дорогого к дешевому</div>
@@ -112,7 +113,7 @@
 
     <!-- футер с различной информации о сайте -->
     <footer class="mobile-footer">
-        <img class="footer-icon" src="{% static "shop/pics/icon.ico" %}" alt="">
+        <img onclick="redirectToPage('{% url "main" %}')" class="footer-icon" src="{% static "shop/pics/icon.ico" %}" alt="">
         <p class="footer-contact">Email: support@zipwear.store</p>
         <p class="footer-contact">Тел: +7-555-123-456</p>
         <p class="footer-contact">
