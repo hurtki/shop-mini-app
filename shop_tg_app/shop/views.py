@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404
 # обязательная категория, сортировка дефолтная по новизне 
 class ProductsPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
-    allowed_sorts = ["created_at", 'price', '-price', '-created_at']
+    allowed_sorts = settings.ALLOWED_SORTS
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,10 +104,18 @@ class InspectPageView(BaseContextMixin, TemplateView):
 # не будет плашки сортировки 
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
+    allowed_sorts = settings.ALLOWED_SORTS
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        request = self.request
+        sort = request.GET.get("sort")
+        if sort not in self.allowed_sorts:
+            sort = "-created_at"
+        
+        
+        
         # Получаем главное фото через подзапрос
         photo_subquery = ProductPhoto.objects.filter(
             product=OuterRef('pk')
@@ -116,7 +124,7 @@ class MainPageView(BaseContextMixin, TemplateView):
         # Получаем 10 самых новых продуктов с аннотированным главным фото
         top_products = Product.objects.annotate(
             main_photo=Subquery(photo_subquery)
-        ).order_by('-created_at')[:10]
+        ).order_by(sort)[:10]
 
         context.update({
             "products_querry_set": top_products,
