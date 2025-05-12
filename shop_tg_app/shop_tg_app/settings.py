@@ -38,6 +38,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 TG_USERNAME = "@Cleomente"
 # Application definition
+ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
