@@ -64,10 +64,15 @@ function redirectToProductsPageBySort(sort) {
     // Если есть параметр search, редиректим на /search/
     const new_url = `${baseUrl}/search/?search=${search_param}&sort=${sort}`;
     redirectToPage(new_url);
+    return;
   } else {
     // Если параметр search отсутствует, редиректим на /products/
     if (!category_param) {
-      redirectToPage(baseUrl);
+      const new_url = `${baseUrl}?sort=${sort}`;
+
+
+      redirectToPage(new_url);
+      return;
     }
     const new_url = `${baseUrl}/products?category=${category_param}&sort=${sort}`;
     redirectToPage(new_url);
