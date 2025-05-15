@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, Size, ProductStock, Category, ProductPhoto
-from django.utils.html import mark_safe
+from django.utils.safestring import mark_safe
 
 # инлайн показ продуктов на складе связанных с моделью конкретного продукта 
 class ProductStockInline(admin.TabularInline):
@@ -14,12 +14,12 @@ class ProductPhotoInline(admin.TabularInline):
     readonly_fields = ['image_preview']  # Если не хочется, чтобы заказчик мог редактировать путь к изображению
     
     # метод описывающий столбик превью фото в админке, возвразащает html строку
-    def image_preview(self, obj) -> str:
+    @admin.display(description="Превью")
+    def image_preview(self, obj):
         if obj.image:
-            print(obj.image.url)
             return mark_safe(f'<img src="{obj.image.url}" width="100" />')
-        return "Нет изображения"
-    image_preview.short_description = "Превью"
+        return mark_safe("Нет изображения")
+
     
     
 class ProductAdmin(admin.ModelAdmin):
