@@ -1,9 +1,5 @@
 import os
 from pathlib import Path
-# библиотека для работы с переменными окружения
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,12 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")  # Никогда не хардкодь секретку
+SECRET_KEY = "somesecretkey"  # Никогда не хардкодь секретку
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")  # Список хостов, которые могут обращаться к вашему приложению
+ALLOWED_HOSTS = ["*"]
 
 # статические файлы 
 STATIC_URL = '/static/'
@@ -30,7 +26,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # юзернейм продавца 
 # туда перекидывает когда кто-то нажимает кнопку купить 
-TG_USERNAME = "@Cleomente"
+TG_USERNAME = "@VoidMgr"
 
 
 # доступные соротировки 
@@ -40,16 +36,7 @@ ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 MAX_SEARCH_CHARACTERS = 15
 MIN_SEARCH_CHARACTERS = 3
 
-# CSRF cookies with ssl settings 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-
-=======
-# Application definition
-ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
-
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -100,18 +87,12 @@ WSGI_APPLICATION = 'shop_tg_app.wsgi.application'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 # Password validation
