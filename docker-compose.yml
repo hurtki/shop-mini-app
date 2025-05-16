@@ -1,0 +1,67 @@
+services:
+  # сервер базы данных
+  postgres:
+    image: postgres:15
+    container_name: psgr
+    restart: always
+    # получаем переменные окружения из файла .env
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tg-shop-net
+
+  # главный веб джанго сервер
+  web:
+    build: ./shop_tg_app
+    container_name: tg-shop-django
+    image: hurtki/tg-shop:latest
+    restart: always
+    
+    networks:
+      - tg-shop-net
+    
+    ports:
+      - "8000:8000"
+    
+    depends_on:
+      - postgres
+
+    
+    
+    env_file:
+      - .env
+    
+    
+    volumes:
+      - ./shop_tg_app:/app/www/shop_tg_app
+
+  # nginx сервер
+  nginx:
+    image: nginx:latest
+    container_name: tg-shop-nginx-server
+    restart: always
+    ports:
+      - "80:8088"
+    depends_on:
+      - web
+    networks:
+      - tg-shop-net
+    
+    volumes:
+      - ./nginx/tg-shop.conf:/etc/nginx/conf.d/tg-shop.conf
+      - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
+      - ./shop_tg_app/static:/app/www/shop_tg_app/static
+      - ./shop_tg_app/media:/app/www/shop_tg_app/media
+
+
+volumes:
+  postgres_data:
+
+networks:
+  tg-shop-net:
+    driver: bridge
+
