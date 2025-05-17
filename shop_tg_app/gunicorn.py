@@ -12,5 +12,6 @@ name = "shop_tg_app"
 # Логи
 accesslog = "-"
 errorlog = "-"
-loglevel = "debug"
+
+loglevel = "warning"
 capture_output = True
