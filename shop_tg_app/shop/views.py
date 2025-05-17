@@ -9,6 +9,8 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from .mixins import BaseContextMixin
 from django.shortcuts import get_object_or_404
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 # страница которая ест параметры и выдает по ним продукты 
@@ -104,6 +106,9 @@ class InspectPageView(BaseContextMixin, TemplateView):
 
 # сюда ничего не будет передаваться, просто продукты отсортировнные по новизне первые 10
 # не будет плашки сортировки 
+
+
+@method_decorator(cache_page(60), name='dispatch')
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
     allowed_sorts = settings.ALLOWED_SORTS
