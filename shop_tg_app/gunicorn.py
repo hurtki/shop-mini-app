@@ -12,10 +12,11 @@ max_requests = 1000
 worker_class = "gevent"
 workers = max_workers()
 
-env = {
-    'Django_SETTINGS_MODULE': 'shop_tg_app.settings',
-}
-
-
 reload = True
 name = "shop_tg_app"
+
+# Логи
+accesslog = "/app/www/shop_tg_app/logs/access.log"
+errorlog = "/app/www/shop_tg_app/logs/error.log"
+loglevel = "debug"
+capture_output = True
