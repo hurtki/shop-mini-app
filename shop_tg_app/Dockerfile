@@ -21,8 +21,7 @@ RUN pip install --upgrade pip
 WORKDIR /app/www/shop_tg_app
 
 # Копируем зависимости отдельно — это даёт кэш при пересборке
-COPY ../requirements.txt .
-
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
