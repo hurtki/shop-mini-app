@@ -134,4 +134,6 @@ search_input.addEventListener("keydown", function (event) {
   }
 });
 
-
+// убирает возможность закрытие приложения свайпом
+Telegram.WebApp.ready();
+Telegram.WebApp.setupSwipeBehavior({ allow_vertical_swipe: false });

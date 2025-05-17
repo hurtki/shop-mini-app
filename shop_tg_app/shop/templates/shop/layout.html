@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
     <!-- даем возможность указывать тайтл у наследователей шаблона -->
     <title>{% block title %}{% endblock title %}</title>
@@ -13,6 +13,9 @@
     
     <!-- ссылка на икноку -->
     <link rel="shortcut icon" href="{% static 'shop/pics/icon.ico' %}" type="image/x-icon">
+
+    <!-- подключаем sdk telegramm mini app -->
+    <script src="{% static "shop/tg-mini-app-bundle.js" %}"></script>
     
     {% block head %}{% endblock head %}
 </head>
