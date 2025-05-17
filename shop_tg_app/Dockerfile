@@ -25,6 +25,10 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /app/www/shop_tg_app/logs && chown -R userdj:groupdjango /app/www/shop_tg_app/logs
+
 COPY . .
 
 # Меняем пользователя на непривилегированного
