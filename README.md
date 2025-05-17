@@ -16,7 +16,7 @@
 
 1. Клонируйте ветку `master`:  
    ```bash
-   git clone -b master <URL_репозитория>
+   git clone -b master https://github.com/hurtki/shop-mini-app.git
    cd mini-app-tg-shop
 
 # 2. Создайте файл `.env` с обязательными переменными окружения:
@@ -68,7 +68,6 @@ DB_PORT=5432                    # Порт базы данных
 ## Структура проекта (кратко)
 
 * `shop_tg_app/` — исходники Django-приложения
-* `postgres/` — данные и конфигурация PostgreSQL
 * `nginx/` — конфигурация веб-сервера nginx
 
 ---
