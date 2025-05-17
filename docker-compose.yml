@@ -64,6 +64,22 @@ services:
       - ./shop_tg_app/media:/app/www/shop_tg_app/media:ro
       # логи nginx → общий каталог проекта
       - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
+      # certbot (для получения SSL-сертификатов)
+      - ./certbot/www:/var/www/certbot
+  
+  ##################################################################
+  # Certbot (для получения SSL-сертификатов)
+  ##################################################################
+  certbot:
+    image: certbot/certbot
+    container_name: tg-shop-certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+    depends_on:
+      - nginx
+    networks:
+      - tg-shop-net
 
 volumes:
   postgres_data:
