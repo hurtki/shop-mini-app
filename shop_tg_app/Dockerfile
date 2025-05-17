@@ -26,10 +26,14 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Создаём папки для логов и медиа с нужными правами
-RUN mkdir -p /app/www/shop_tg_app/logs /app/www/shop_tg_app/media && \
-    chown -R userdj:groupdjango /app/www/shop_tg_app/logs /app/www/shop_tg_app/media && \
-    chmod -R 775 /app/www/shop_tg_app/logs /app/www/shop_tg_app/media
+# -- логам оставляем только чтение (запись идёт в STDOUT)
+RUN mkdir -p /app/www/shop_tg_app/logs \
+ && chown -R userdj:groupdjango /app/www/shop_tg_app/logs
 
+# -- media: нужен rw, поэтому отдельно
+RUN mkdir -p /app/www/shop_tg_app/media \
+ && chown -R userdj:groupdjango /app/www/shop_tg_app/media \
+ && chmod -R u+rwX /app/www/shop_tg_app/media
 # Копируем весь проект
 COPY . .
 
