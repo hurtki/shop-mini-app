@@ -16,7 +16,7 @@ reload = True
 name = "shop_tg_app"
 
 # Логи
-accesslog = "/app/www/shop_tg_app/logs/access.log"
-errorlog = "/app/www/shop_tg_app/logs/error.log"
+accesslog = "-"
+errorlog = "-"
 loglevel = "debug"
 capture_output = True

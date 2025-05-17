@@ -1,12 +1,17 @@
+############################
+#  TG-SHOP  docker-compose #
+############################
+
 services:
-  # сервер базы данных
+  ##################################################################
+  # PostgreSQL
+  ##################################################################
   postgres:
     image: postgres:15
     container_name: psgr
     restart: always
-    # получаем переменные окружения из файла .env
     env_file:
-      - .env
+      - .env                       # POSTGRES_DB / USER / PASSWORD
     ports:
       - "5432:5432"
     volumes:
@@ -14,49 +19,51 @@ services:
     networks:
       - tg-shop-net
 
-  # главный веб джанго сервер
+  ##################################################################
+  # Django + Gunicorn
+  ##################################################################
   web:
-    build: ./shop_tg_app
-    container_name: tg-shop-django
+    build: ./shop_tg_app          # Dockerfile находится в подпапке
     image: hurtki/tg-shop:latest
+    container_name: tg-shop-django
     restart: always
-    
-    networks:
-      - tg-shop-net
-    
-    ports:
-      - "8000:8000"
-    
+    env_file:
+      - .env                      # .env с переменными окружения
     depends_on:
       - postgres
-
-    
-    
-    env_file:
-      - .env
-    
-    
+    networks:
+      - tg-shop-net
+    ports:
+      - "8000:8000"               # оставляем наружу только для дебага
     volumes:
-      - ./shop_tg_app:/app/www/shop_tg_app
+      # cтатика-медиа на хосте, чтобы nginx читал напрямую
+      - ./shop_tg_app/static:/app/www/shop_tg_app/static
+      - ./shop_tg_app/media:/app/www/shop_tg_app/media
+      # (не монтируем logs, т.к. Gunicorn пишет в STDOUT)
 
-  # nginx сервер
+  ##################################################################
+  # Nginx (обслуживает 80 → web:8000)
+  ##################################################################
   nginx:
     image: nginx:latest
     container_name: tg-shop-nginx-server
     restart: always
-    ports:
-      - "80:80"
     depends_on:
       - web
     networks:
       - tg-shop-net
-    
+    ports:
+      - "80:80"                   # HTTP; HTTPS добавите позже, когда будет домен
     volumes:
-      - ./nginx/tg-shop.conf:/etc/nginx/conf.d/tg-shop.conf
+      # наш конфиг
+      - ./nginx/tg-shop.conf:/etc/nginx/conf.d/tg-shop.conf:ro
+      # «глушим» дефолтный конфиг, чтобы не видеть Welcome-страницу
+      - /dev/null:/etc/nginx/conf.d/default.conf
+      # статика и медиа, чтобы nginx обслуживал напрямую
+      - ./shop_tg_app/static:/app/www/shop_tg_app/static:ro
+      - ./shop_tg_app/media:/app/www/shop_tg_app/media:ro
+      # логи nginx → общий каталог проекта
       - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
-      - ./shop_tg_app/static:/app/www/shop_tg_app/static
-      - ./shop_tg_app/media:/app/www/shop_tg_app/media
-
 
 volumes:
   postgres_data:
@@ -64,4 +71,3 @@ volumes:
 networks:
   tg-shop-net:
     driver: bridge
-
