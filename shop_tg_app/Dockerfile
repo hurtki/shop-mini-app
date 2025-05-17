@@ -5,6 +5,7 @@ FROM python:3.12-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Создаём системного пользователя и группу для безопасности
@@ -17,7 +18,6 @@ ENV PYTHONUNBUFFERED=1
 # Обновляем pip
 RUN pip install --upgrade pip
 
-
 WORKDIR /app/www/shop_tg_app
 
 # Копируем зависимости отдельно — это даёт кэш при пересборке
@@ -25,14 +25,15 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Создаём папки для логов и медиа с нужными правами
+RUN mkdir -p /app/www/shop_tg_app/logs /app/www/shop_tg_app/media && \
+    chown -R userdj:groupdjango /app/www/shop_tg_app/logs /app/www/shop_tg_app/media && \
+    chmod -R 775 /app/www/shop_tg_app/logs /app/www/shop_tg_app/media
 
-RUN mkdir -p /app/www/shop_tg_app/logs && chown -R userdj:groupdjango /app/www/shop_tg_app/logs
-
+# Копируем весь проект
 COPY . .
 
 # Меняем пользователя на непривилегированного
 USER userdj
-
 
 CMD gunicorn -c gunicorn.py shop_tg_app.wsgi
