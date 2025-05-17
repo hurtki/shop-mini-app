@@ -39,6 +39,12 @@ ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 MAX_SEARCH_CHARACTERS = 15
 MIN_SEARCH_CHARACTERS = 3
 
+# CSRF cookies with ssl settings 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
