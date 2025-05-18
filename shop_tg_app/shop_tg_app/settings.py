@@ -32,6 +32,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # туда перекидывает когда кто-то нажимает кнопку купить 
 TG_USERNAME = "@Cleomente"
 
+
 # доступные соротировки 
 ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 
@@ -44,6 +45,10 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+
+=======
+# Application definition
+ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 
 
 INSTALLED_APPS = [

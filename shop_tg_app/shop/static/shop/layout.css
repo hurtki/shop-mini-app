@@ -89,6 +89,22 @@ header {
 }
 
 
+=======
+    margin-left: 5px;
+}
+
+.search_icon, .category_icon, .sort_icon {
+    height: 100%;
+    opacity: var(--opacity-mid)
+    
+}
+
+
+.sort_icon {
+    margin-left: 15px;
+}
+
+
 
 #search_field {
     width: 75%;

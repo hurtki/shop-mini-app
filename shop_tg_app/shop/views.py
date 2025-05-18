@@ -120,8 +120,8 @@ class MainPageView(BaseContextMixin, TemplateView):
         sort = request.GET.get("sort")
         if sort not in self.allowed_sorts:
             sort = "-created_at"
-        
-       # Получаем главное фото через подзапрос
+
+       # Получаем главное фото через подзапрос   
         photo_subquery = ProductPhoto.objects.filter(
             product=OuterRef('pk')
         ).order_by('-priority')  # Сортируем по приоритету, не ограничивая результат срезом
