@@ -36,7 +36,8 @@ ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 MAX_SEARCH_CHARACTERS = 15
 MIN_SEARCH_CHARACTERS = 3
 
-# качество webp перевью
+# качество webp перевью from 50 to 100
+# 50 - низкое качество, 100 - высокое качество
 WEBP_QUALITY = 75
 
 INSTALLED_APPS = [
