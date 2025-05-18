@@ -61,6 +61,19 @@ function handleBuyButton(product_id, product_price, product_name, username) {
 
 }
 
+// перменная для хранения последнего нажатого радио
+let lastChecked = null;
+// обработчик клика по радио кнопке
+// добавляет возможность отжатия кнопки при повтороном нажатии 
+function toggleRadio(radio) {
+if (lastChecked === radio) {
+    radio.checked = false;
+    lastChecked = null;
+} else {
+    lastChecked = radio;
+}
+}
+
 
 
 
