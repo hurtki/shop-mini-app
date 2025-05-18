@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
 from mptt import models as MPTTModels 
+from shop.validators import validate_jpg_image
+from shop.utils import convert_image_to_webp
 
 class Category(MPTTModels.MPTTModel):
     """
@@ -93,7 +95,10 @@ class ProductPhoto(models.Model):
     Класс модели фотграфии продукта которую я уже буду привязывать к продукту
     """
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, related_name="fotos")
-    image = models.ImageField(upload_to="products_photos/")
+    # фотграфия продукта
+    image = models.ImageField(upload_to="products_photos/", validators=[validate_jpg_image], blank=False, null=False)
+    # фотграфия продукта в формате webp
+    image_preview = models.ImageField(upload_to="products_photos_preview/", null=True, blank=True)
     
     # порядок в котором будут отображаться фотграфии на странице 
     priority = models.IntegerField(validators=[
@@ -101,6 +106,21 @@ class ProductPhoto(models.Model):
         MaxValueValidator(10000)
     ], default=0)
     
+    
+    def save(self, *args, **kwargs):
+        # проверяем что это CREATE запрос
+        # и что у нас нет первичного ключа (т.е. объект еще не сохранен в БД)
+        is_new = self._state.adding and not self.pk
+
+        # сначала сохраняем объект
+        super().save(*args, **kwargs)
+
+        # если это новый объект, то конвертируем изображение в webp
+        # и сохраняем его в поле image_preview
+        if is_new:
+            self.image_preview = convert_image_to_webp(self.image)
+            super().save(update_fields=['image_preview'])
+
     def __str__(self):
         return f"Фото для {self.product.name} (приоритет {self.priority})"
 
