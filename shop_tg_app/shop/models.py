@@ -34,10 +34,10 @@ class ProductStock(models.Model):
     """
 
     # сам пррдукт наличие которого на скалде мы описваем 
-    product = models.ForeignKey(to="Product", on_delete=models.CASCADE, related_name='stock_items')
+    product = models.ForeignKey(to="Product", on_delete=models.CASCADE, related_name='stock_items', null=False)
     
     # ссылка на свзяь 
-    size = models.ForeignKey(to="Size", on_delete=models.CASCADE)
+    size = models.ForeignKey(to="Size", on_delete=models.CASCADE, null=False)
     # количество в котором продукт будет на складе
     quantity = models.PositiveIntegerField(default=0, validators=[
         MinValueValidator(0),
@@ -73,7 +73,7 @@ class Product(models.Model):
     description = models.TextField(max_length=500, null=True, blank=True)
     
     # возможные размеры продукта 
-    sizes = models.ManyToManyField("Size", related_name="products_with_size")
+    sizes = models.ManyToManyField("Size", related_name="products_with_size", blank=True)
     
     # цена продукта 
     price = models.IntegerField(validators=[

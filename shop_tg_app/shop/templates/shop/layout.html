@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
     <!-- даем возможность указывать тайтл у наследователей шаблона -->
     <title>{% block title %}{% endblock title %}</title>
@@ -13,6 +13,9 @@
     
     <!-- ссылка на икноку -->
     <link rel="shortcut icon" href="{% static 'shop/pics/icon.ico' %}" type="image/x-icon">
+
+    <!-- подключаем sdk telegramm mini app -->
+    <script src="{% static "shop/tg-mini-app-bundle.js" %}"></script>
     
     {% block head %}{% endblock head %}
 </head>
@@ -74,10 +77,10 @@
             </div>
         </div>
         <!-- блок для поиска по продтукам -->
-        <div class="search_bar">
+        <div class="search_bar" id="search_bar" {% if not show_sort_bar %}style="max-width: none;"{% endif %}>
             <img  class="search_icon" src="{% static "shop/pics/search_icon.svg" %}" alt="search">
             <!-- фактический инпут для реализовки поиска-->
-            <input type="text" name="search_field" id="search_field" placeholder="Я ищу.." enterkeyhint="send">
+            <input type="text" maxlength="{{ max_search_characters }}" minlength="{{ min_search_characters }}" name="search_field" id="search_field" placeholder="Я ищу.." enterkeyhint="send">
         </div>
         <!-- блок с икнокой соритировки через котрый вызывается окно выбора категории -->
         <!-- делаем возможность убирать блок если на странице нету сортировки -->
@@ -111,7 +114,7 @@
     <!-- футер с различной информации о сайте -->
     <footer class="mobile-footer">
         <img onclick="redirectToPage('{% url "main" %}')" class="footer-icon" src="{% static "shop/pics/icon.ico" %}" alt="">
-        <p class="footer-contact">Email: support@zipwear.store</p>
+        <p class="footer-contact">Email: support@void.store</p>
         <p class="footer-contact">Тел: +7-555-123-456</p>
         <p class="footer-contact">
         Telegramm: <a href="https://t.me/@void_shop" target="_blank">@void_shop</a>

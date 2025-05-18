@@ -37,11 +37,10 @@
 }
 
 
-
-
 .product_price_tag {
-    margin: 0;
-    margin-block: 0;
+    margin: 2px;
+    margin-top: 2px;
+    margin-bottom: 1px;
     padding: 0;
     color: rgb(255, 255, 255);
     font-size: medium;
@@ -59,4 +58,38 @@
     opacity: var(--opacity-low);
     font-weight: 600;
     
+}
+
+.nothing_found {
+    width: 96vw;
+    max-width: 600px;
+    margin: 10px auto; /* центрирует блок по горизонтали */
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+}
+
+.nothing_found h2 {
+    left: 7.5%;
+    position: relative;
+    width: 85%;
+    font-size: 24px;
+    padding-top: 0;
+    color: var(--text-color-dim);
+    margin-bottom: 20px;
+}
+
+.nothing_found_image {
+    width: 45%;
+    max-width: 300px;
+    height: auto;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.nothing_found_image:hover {
+    transform: scale(1.05);
+    opacity: 1;
 }

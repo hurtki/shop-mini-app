@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
+    
+
+    
 {% endblock head %}
     
 {% block body %}
@@ -21,6 +24,9 @@
         {% for photo in product_photos %}
             <div class="swiper-slide"><img class="slider_image" src="{{ photo.image.url }}" /></div>
         {% endfor %}
+        {% if not product_photos %}
+            <div class="swiper-slide"><img class="slider_image" src="{% static "shop/pics/no_image_available.jpg" %}" /></div>
+        {% endif %}
 
         </div> 
         <!-- Кружочки -->
@@ -35,12 +41,12 @@
         {% for size in able_sizes %}
             {% if not sizes_availability|get_item:size.id %}
                 <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}" disabled>
-                <label for="size-{{ size.name }}" class="size-label unavailable">
+                <label for="size-{{ size.name }}" class="size-label_unavailable">
                     {{ size.name }}
                     <img src="{% static "shop/pics/cross_icon.svg" %}" class="overlay-cross" alt="">
                 </label>
             {% else %}
-                <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}">
+                <input type="radio" id="size-{{ size.name }}" name="size" value="{{ size.name }}" onclikc="toggleRadio(this)">
                 <label for="size-{{ size.name }}" class="size-label">
                     {{ size.name }}
                 </label>

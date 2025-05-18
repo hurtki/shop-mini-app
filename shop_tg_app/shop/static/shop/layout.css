@@ -5,17 +5,19 @@
 
 
 :root {
-    --background-color: #111216;
+    --background-color: rgb(20,22,27);
     --text-color-bright: white;
     --text-color-dim: rgba(255, 255, 255, 0.712);
-    --parent-category-color: #131627;
-    --child-category-color: rgb(32, 37, 63);
+    --warning-color-dim: rgba(244, 58, 58, 0.712);
+    --parent-category-color: #13162700;
+    --child-category-color: rgba(32, 37, 63, 0);
     --footer-separator-color: #444;
     --font-2: "Open Sans", sans-serif;
     --font-1: 'Montserrat Alternates', sans-serif;
     --opacity-mid: 75%;
-    --opacity-high: 85;
+    --opacity-high: 85%;
     --opacity-low: 65%;
+    --header-hight: 40px;
 }
 
 
@@ -36,15 +38,16 @@ html, body {
 
 
 header {
-    width: 100%;
-    height: 45px;
+    width: 96vw;
+    height: var(--header-hight);
+    position: relative;
     left: 0;
     top: 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 2vw;
     box-sizing: border-box;
+    column-gap: 10px;
 }
 
 
@@ -54,22 +57,39 @@ header {
     display: flex;
     align-items: center;
     border-radius: 15px;
-    height: 45px;
+    height: var(--header-hight);
+    
     transition: 0.5s ease;
     
 }
 
 .category_bar, .sort_bar, .main_page_bar {
-    width: 15%;
-    justify-content: center;
+    margin: 0;
+    width: var(--header-hight);
+    justify-content: flex-start;
     position: relative;
 }
 
 .search_bar{
-    margin-left: 5px;
     flex-grow: 1;
     justify-content: flex-start;
     border: solid 1.7px var(--text-color-dim);
+    max-width: calc(96vw - var(--header-hight) - 53px - 20px - 4vw);
+    
+    
+}
+
+.search_icon, .category_icon, .sort_icon {
+    height: var(--header-hight);
+    opacity: var(--opacity-mid)
+}
+
+.sort_icon {
+    width: 53px;
+}
+
+
+=======
     margin-left: 5px;
 }
 
@@ -85,6 +105,7 @@ header {
 }
 
 
+
 #search_field {
     width: 75%;
     margin-right: 3px;
@@ -93,7 +114,6 @@ header {
     color: var(--text-color-bright);
     font-size: 20px;
     outline: none;
-    
     font-family: var(--font-1);
 }
 
@@ -102,6 +122,7 @@ header {
 
 #search_field::placeholder {
     font-size: 20px;
+    font-family: var(--font-2);
 }
 
 
@@ -157,7 +178,7 @@ li {
 }
 
 .parent_category_name {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: var(--parent-category-color);
     border: 1px solid var(--text-color-dim);
     border-radius: 15px;
     width: 42.5vw;
@@ -171,7 +192,7 @@ li {
 }
 
 .child_category_name {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: var(--child-category-color);
     border: 1px solid var(--text-color-dim);
     border-radius: 15px;
     width: 32.5vw;

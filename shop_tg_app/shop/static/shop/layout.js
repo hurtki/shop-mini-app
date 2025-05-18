@@ -1,3 +1,4 @@
+// откртие окна сортировки 
 function toggleSort() {
   const input = document.getElementById("sortings");
   const params = new URLSearchParams(window.location.search);
@@ -19,7 +20,7 @@ function toggleSort() {
 }
 
 
-
+// открытие окна категорий 
 function toggleCategories() {
   const input = document.getElementById("categories");
   
@@ -35,31 +36,42 @@ function toggleCategories() {
   }
 }
 
+
+// ГЛАВНАЯ ФУНКЦИЯ ДЛЯ ПЕРЕХОДА НА ДРУГУЮ СТРАНИЦУ
 function redirectToPage(url) {
+  // сохраняем текущую страницу в session storage 
+  // для последующей реализации кнопки back 
+  const cleanUrl = window.location.origin + window.location.pathname + window.location.search;
+  sessionStorage.setItem('prevPage', cleanUrl);
+  // сохраняем полный URL
+  
   window.location.href = url; // Перенаправление на переданный URL
 }
 
-
+// применение категории из окна категорий 
 function redirectToProductsPageByCategory(categoryId) {
   const params = new URLSearchParams(window.location.search);
   let sort_param = params.get("sort");
-
+  // если нету параметра в url на странице на которой мы находимся то ставим дефолтный 
   if (!sort_param) {
-    sort_param = "created_at";
+    sort_param = "-created_at";
   }
-
-  const baseUrl = window.location.origin; // http://127.0.0.1:8000
+  
+  const baseUrl = window.location.origin; 
   const new_url = `${baseUrl}/products?category=${categoryId}&sort=${sort_param}`;
 
   redirectToPage(new_url);
 }
 
+
+// применение категории из окна сортировок 
 function redirectToProductsPageBySort(sort) {
   const params = new URLSearchParams(window.location.search);
   let category_param = params.get("category");
   let search_param = params.get("search");
   const baseUrl = window.location.origin;
 
+  // проверяем находимся ли сы на странице поиска 
   if (search_param) {
     // Если есть параметр search, редиректим на /search/
     const new_url = `${baseUrl}/search/?search=${search_param}&sort=${sort}`;
@@ -69,8 +81,6 @@ function redirectToProductsPageBySort(sort) {
     // Если параметр search отсутствует, редиректим на /products/
     if (!category_param) {
       const new_url = `${baseUrl}?sort=${sort}`;
-
-
       redirectToPage(new_url);
       return;
     }
@@ -79,7 +89,7 @@ function redirectToProductsPageBySort(sort) {
   }
 }
 
-
+// делает видными всех ul детей у объекта 
 function toggleChildren(event) {
   const parent = event.target;
   const categoryId = parent.dataset.categoryId;
@@ -91,3 +101,39 @@ function toggleChildren(event) {
 }
 
 
+
+
+const search_input = document.getElementById("search_field");
+
+// при отправке поиска
+function handleSearchSend() {
+  
+  const input_value = search_input.value.trim();
+
+  // проводим валидацию по длинне инпута 
+  if ((input_value.length < search_input.minLength) || (input_value.length > search_input.maxLength)) {
+    const search_bar_frame = document.getElementById("search_bar");
+    console.log("entered handlesearch");
+    search_bar_frame.style.border = "solid 1.7px var(--warning-color-dim)";
+    return;
+  } 
+
+  // генерируем url для переадресовки 
+  const baseUrl = window.location.origin;
+  const new_url = `${baseUrl}/search/?search=${encodeURIComponent(input_value)}`;
+  redirectToPage(new_url);
+}
+
+
+// вегшаем на инпут поиска если нажата кнопка и проверяем была ли это кнопка отправки 
+// если это была кнопка отправки то вызываем функцию отправки 
+search_input.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    handleSearchSend();
+  }
+});
+
+// убирает возможность закрытие приложения свайпом
+Telegram.WebApp.ready();
+Telegram.WebApp.setupSwipeBehavior({ allow_vertical_swipe: false });

@@ -179,3 +179,7 @@ cython_debug/
 media/
 base_shirts/
 .DS_store
+shop_tg_app/static/
+shop_tg_app/media/
+shop_tg_app/staticfiles/
+shop_tg_app/logs
