@@ -36,7 +36,7 @@ ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 MAX_SEARCH_CHARACTERS = 15
 MIN_SEARCH_CHARACTERS = 3
 
-CSRF_TRUSTED_ORIGINS = ["*"]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
