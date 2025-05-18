@@ -46,11 +46,6 @@ SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-=======
-# Application definition
-ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
