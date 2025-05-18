@@ -1,12 +1,12 @@
 function getNoSizeMessage(product_name, product_price, product_id) {
-    return `👋 Здравствуйте! Хотел бы купить товар:
+    return `👋 Здравствуйте! Хотел бы приобрести товар:
 🛍️ Название: ${product_name}
 💸 Цена: ${product_price}₽
 🆔 Артикул: ${product_id}`;
 }
 
 function getSizeMessage(product_name, product_price, selectedSize, product_id) {
-    return `👋 Здравствуйте! Хотел бы купить товар:
+    return `👋 Здравствуйте! Хотел бы приобрести товар:
 🛍️ Название: ${product_name}
 💸 Цена: ${product_price}₽
 📏 Размер: ${selectedSize}
@@ -60,20 +60,18 @@ function handleBuyButton(product_id, product_price, product_name, username) {
     window.open(telegramLink, "_blank");
 
 }
-
-// перменная для хранения последнего нажатого радио
+// последний выбранный радиобаттон
 let lastChecked = null;
-// обработчик клика по радио кнопке
-// добавляет возможность отжатия кнопки при повтороном нажатии 
+
+// обработчик клика по радиокнопке
 function toggleRadio(radio) {
-if (lastChecked === radio) {
+  if (lastChecked === radio) {
     radio.checked = false;
     lastChecked = null;
-} else {
+  } else {
     lastChecked = radio;
+  }
 }
-}
-
 
 
 
