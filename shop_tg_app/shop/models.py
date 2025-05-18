@@ -73,7 +73,7 @@ class Product(models.Model):
     description = models.TextField(max_length=500, null=True, blank=True)
     
     # возможные размеры продукта 
-    sizes = models.ManyToManyField("Size", related_name="products_with_size")
+    sizes = models.ManyToManyField("Size", related_name="products_with_size", blank=True)
     
     # цена продукта 
     price = models.IntegerField(validators=[
