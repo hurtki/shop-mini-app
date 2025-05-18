@@ -20,7 +20,11 @@
                 {% if not product.main_photo %}
                     <img class="product_photo" src="{% static "shop/pics/no_image_available.jpg" %}" alt="">
                 {% else %}
-                    <img class="product_photo" src="{{ media_url }}{{ product.main_photo }}" alt="">
+                    {% if product.main_photo_webp %}
+                        <img class="product_photo" src="{{ media_url }}{{ product.main_photo_webp }}" alt="">
+                    {% else %}
+                        <img class="product_photo" src="{{ media_url }}{{ product.main_photo }}" alt="">
+                    {% endif %}
                 {% endif %}
 
                 <h2 class="product_price_tag">{{ product.price }}₽</h2>
