@@ -34,6 +34,7 @@ class ProductsPageView(BaseContextMixin, TemplateView):
         
         category_id = int(category_param)
         
+        # Проверяем, что категория не является родительской
         categories_id_without_children = Category.objects.filter(
             children__isnull=True
         ).values_list("id", flat=True)
@@ -108,7 +109,6 @@ class InspectPageView(BaseContextMixin, TemplateView):
 # не будет плашки сортировки 
 
 
-@method_decorator(cache_page(60), name='dispatch')
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
     allowed_sorts = settings.ALLOWED_SORTS
@@ -130,7 +130,11 @@ class MainPageView(BaseContextMixin, TemplateView):
         top_products = Product.objects.annotate(
             main_photo=Subquery(
                 photo_subquery.values('image')[:1]  # Ограничение на выборку только одного фото
+            ),
+            main_photo_webp=Subquery(
+                photo_subquery.values('image_preview')[:1]  # Ограничение на выборку только одного фото
             )
+            
         ).order_by(sort)[:10]
         
         context.update({
