@@ -8,7 +8,8 @@ class BaseContextMixin:
         context = super().get_context_data(**kwargs)
         
         # получаем древо дерева из базы данных
-        categories = Category.objects.filter(parent=None)
+        categories = Category.objects.filter(parent=None).order_by('-priority')
+        # получаем все категории, которые не являются родительскими
         
         # Общие переменные для шаблонов
         context.update({
