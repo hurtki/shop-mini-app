@@ -10,13 +10,15 @@ class ProductStockInline(admin.TabularInline):
 class ProductPhotoInline(admin.TabularInline):
     model = ProductPhoto
     extra = 1  # Количество пустых строк для добавления новых фотографий по умолчанию
-    fields = ('image', 'priority', 'image_preview')  # Указываем, какие поля будут отображаться
-    readonly_fields = ['image_preview']  # Если не хочется, чтобы заказчик мог редактировать путь к изображению
+    fields = ('image', 'priority', 'show_image_preview')  # Указываем, какие поля будут отображаться
+    readonly_fields = ['show_image_preview']  # Если не хочется, чтобы заказчик мог редактировать путь к изображению
     
     # метод описывающий столбик превью фото в админке, возвразащает html строку
     @admin.display(description="Превью")
-    def image_preview(self, obj):
+    def show_image_preview(self, obj):
         if obj.image:
+            if obj.image_preview:
+                return mark_safe(f'<img src="{obj.image_preview.url}" width="100" />')
             return mark_safe(f'<img src="{obj.image.url}" width="100" />')
         return mark_safe("Нет изображения")
 
