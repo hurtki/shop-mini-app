@@ -30,7 +30,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # юзернейм продавца 
 # туда перекидывает когда кто-то нажимает кнопку купить 
-TG_USERNAME = "Cleomente"
+TG_USERNAME = "VoidMgr"
 
 
 # доступные соротировки 
