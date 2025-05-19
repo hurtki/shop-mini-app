@@ -11,6 +11,7 @@ from .mixins import BaseContextMixin
 from django.shortcuts import get_object_or_404
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
+from .services import get_photo_subquery, get_able_sizes, category_sort_params_validation
 
 
 # страница которая ест параметры и выдает по ним продукты 
@@ -26,28 +27,12 @@ class ProductsPageView(BaseContextMixin, TemplateView):
         category_param = request.GET.get("category")
         sort_param = request.GET.get("sort")
         
-        if not (category_param and sort_param):
-            raise ValueError("no params: category, sort")
-        
-        if (not category_param.isdigit()) or (sort_param not in self.allowed_sorts):
-            raise ValueError("wrong params")
-        
+        category_sort_params_validation(category_param, sort_param, self.allowed_sorts)
         category_id = int(category_param)
         
-        categories_id_without_children = Category.objects.filter(
-            children__isnull=True
-        ).values_list("id", flat=True)
-        
-        if category_id not in categories_id_without_children:
-            raise ValueError("bad category given")
-        
-        
-        photo_subquery = ProductPhoto.objects.filter(
-            product=OuterRef('pk')
-        ).order_by('-priority').values('image')[:1]
-        
         products = Product.objects.filter(category__id=category_id).annotate(
-            main_photo=Subquery(photo_subquery)
+            main_photo=Subquery(get_photo_subquery().values('image')[:1]), 
+            main_photo_webp=Subquery(get_photo_subquery().values('image_preview')[:1]),
         ).order_by(sort_param)
 
         # Базовый layout-контекст
@@ -75,19 +60,18 @@ class InspectPageView(BaseContextMixin, TemplateView):
         product = self.product
         
         product_photos = ProductPhoto.objects.filter(product=product).order_by('-priority')
+        
         able_sizes = product.sizes.all()
-        # Для каждого размера проверяем наличие на складе
-        sizes_availability = {}
-        for size in able_sizes:
-            # Проверяем, есть ли этот размер на складе с количеством > 0
-            stock = ProductStock.objects.filter(product=product, size=size).first()  # Получаем первый объект на складе для этого размера
-            sizes_availability[size.id] = stock is not None and stock.quantity > 0  # Если stock есть и количество больше 0, то True
+        # поолучаем наличие на складе размеров
+        sizes_availability = get_able_sizes(product, able_sizes=able_sizes)
         
-        
-        context["sizes_availability"] = dict(sizes_availability) 
-        context["able_sizes"] = able_sizes
-        context["product"] = product
-        context["product_photos"] = product_photos
+        context.update({
+            "sizes_availability": dict(sizes_availability),
+            "able_sizes": able_sizes,
+            "product": product,
+            "product_photos": product_photos,
+        })
+
         return context
 
         
@@ -108,7 +92,6 @@ class InspectPageView(BaseContextMixin, TemplateView):
 # не будет плашки сортировки 
 
 
-@method_decorator(cache_page(60), name='dispatch')
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
     allowed_sorts = settings.ALLOWED_SORTS
@@ -121,22 +104,20 @@ class MainPageView(BaseContextMixin, TemplateView):
         if sort not in self.allowed_sorts:
             sort = "-created_at"
 
-       # Получаем главное фото через подзапрос   
-        photo_subquery = ProductPhoto.objects.filter(
-            product=OuterRef('pk')
-        ).order_by('-priority')  # Сортируем по приоритету, не ограничивая результат срезом
-
         # Получаем 10 самых новых продуктов с аннотированным главным фото
         top_products = Product.objects.annotate(
             main_photo=Subquery(
-                photo_subquery.values('image')[:1]  # Ограничение на выборку только одного фото
-            )
+                get_photo_subquery().values('image')[:1]  # Ограничение на выборку только одного фото
+            ),
+            main_photo_webp=Subquery(
+                get_photo_subquery().values('image_preview')[:1]  # Ограничение на выборку только одного фото
+        )
+            
         ).order_by(sort)[:10]
         
         context.update({
             "products_querry_set": top_products,
             "show_sort_bar": True,
-            
         })
 
         return context
@@ -160,18 +141,15 @@ class SearchPageView(BaseContextMixin, TemplateView):
         # получаем валидированный параметр 
         validated_search_param = self.search_param
         
-        # Получаем подзапрос для главного фото
-        photo_subquery = ProductPhoto.objects.filter(
-            product=OuterRef('pk')
-        ).order_by('-priority')  # Сортируем по приоритету, чтобы выбрать самое главное фото
 
         # Фильтрация по поисковому запросу и добавление главного фото
         search_result_products = Product.objects.filter(name__icontains=validated_search_param).annotate(
             main_photo=Subquery(
-                photo_subquery.values('image')[:1]  
-            )
-        )
-        
+                get_photo_subquery().values('image')[:1]  # Ограничение на выборку только одного фото
+            ),
+            main_photo_webp=Subquery(
+                get_photo_subquery().values('image_preview')[:1]  # Ограничение на выборку только одного фото
+        ))
         
         context.update({
             "products_querry_set": search_result_products,
@@ -188,7 +166,6 @@ class SearchPageView(BaseContextMixin, TemplateView):
             # получаем параметр поиска из запроса 
             search_param = request.GET.get("search")
             
-            Product.objects.filter(name__icontains=search_param)
             
             if not search_param or len(search_param) > settings.MAX_SEARCH_CHARACTERS or len(search_param) < settings.MIN_SEARCH_CHARACTERS:
                 return HttpResponseBadRequest("wrong search param")
