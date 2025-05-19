@@ -43,6 +43,8 @@ function redirectToPage(url) {
   // для последующей реализации кнопки back 
   const cleanUrl = window.location.origin + window.location.pathname + window.location.search;
   sessionStorage.setItem('prevPage', cleanUrl);
+
+  Telegram.WebApp.BackButton.hide(); // прячем кнопку назад
   // сохраняем полный URL
   
   window.location.href = url; // Перенаправление на переданный URL
@@ -134,6 +136,25 @@ search_input.addEventListener("keydown", function (event) {
   }
 });
 
-// убирает возможность закрытие приложения свайпом
-Telegram.WebApp.ready();
-Telegram.WebApp.setupSwipeBehavior({ allow_vertical_swipe: false });
+const app = window.Telegram?.WebApp;
+
+if (app) {
+  // 1. Убедимся, что Telegram WebApp готов
+  app.ready();
+
+  // 2. Попытка использовать актуальные методы Telegram API
+  if (typeof app.disableVerticalSwipes === 'function') {
+    app.disableVerticalSwipes(); // ✅ Новый способ (официальный)
+  }
+
+  // 3. Возможно, работает кастомная настройка (для некоторых клиентов)
+  if (typeof app.setOption === 'function') {
+    try {
+      app.setOption('allow_vertical_swipe', false); // ✅ для Telegram X / v7.7+
+    } catch (e) {
+      console.warn("setOption не сработал:", e);
+    }
+  }
+} else {
+  console.warn("Telegram.WebApp не найден");
+}
