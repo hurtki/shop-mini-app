@@ -1,8 +1,14 @@
 // откртие окна сортировки 
 function toggleSort() {
+  const categories_input = document.getElementById("categories");
+  
+  if (categories_input.style.display === "block") {
+    return;
+  }
+  
   const input = document.getElementById("sortings");
   const params = new URLSearchParams(window.location.search);
-
+  
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
     const sort = params.get('sort'); 
@@ -22,10 +28,14 @@ function toggleSort() {
 
 // открытие окна категорий 
 function toggleCategories() {
+  const sortings_input = document.getElementById("sortings");
+  
+  if (sortings_input.style.display === "block") {
+    return;
+  }
+
   const input = document.getElementById("categories");
-  
-  
-  
+
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
     input.style.zIndex = 999;
