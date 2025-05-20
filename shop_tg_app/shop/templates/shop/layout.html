@@ -32,11 +32,12 @@
                   const first_src = '{% static "shop/pics/cross_icon.svg" %}';
                   const second_src = '{% static "shop/pics/category_icon.svg" %}';
               
-                  if (img.src.endsWith("cross_icon.svg")) {
+                  if (img.src.endsWith(first_src)) {
                     img.src = second_src;
                   } else {
                     img.src = first_src;
                   }
+
                 }
               </script>              
             <!-- меню категорий / изначально скрыто -->
