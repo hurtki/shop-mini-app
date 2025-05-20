@@ -26,9 +26,13 @@ function toggleSort() {
 function toggleCategories() {
   const sortings_input = document.getElementById("sortings");
   // если открыто окно сортировок то закрываем его
-  if (sortings_input.style.display === "block") {
+  
+  if (sortings_input) {
+    if (sortings_input & sortings_input.style.display === "block") {
     toggleSort();
   }
+  }
+  
 
   const input = document.getElementById("categories");
 
