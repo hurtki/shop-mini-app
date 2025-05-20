@@ -2,10 +2,6 @@
 function toggleSort() {
   const categories_input = document.getElementById("categories");
   
-  if (categories_input.style.display === "block") {
-    return;
-  }
-  
   const input = document.getElementById("sortings");
   const params = new URLSearchParams(window.location.search);
   
@@ -29,9 +25,9 @@ function toggleSort() {
 // открытие окна категорий 
 function toggleCategories() {
   const sortings_input = document.getElementById("sortings");
-  
+  // если открыто окно сортировок то закрываем его
   if (sortings_input.style.display === "block") {
-    return;
+    toggleSort();
   }
 
   const input = document.getElementById("categories");
