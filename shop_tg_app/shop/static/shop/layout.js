@@ -1,8 +1,14 @@
 // откртие окна сортировки 
 function toggleSort() {
+  const categories_input = document.getElementById("categories");
+  
+  if (categories_input.style.display === "block") {
+    return;
+  }
+  
   const input = document.getElementById("sortings");
   const params = new URLSearchParams(window.location.search);
-
+  
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
     const sort = params.get('sort'); 
@@ -22,10 +28,14 @@ function toggleSort() {
 
 // открытие окна категорий 
 function toggleCategories() {
+  const sortings_input = document.getElementById("sortings");
+  
+  if (sortings_input.style.display === "block") {
+    return;
+  }
+
   const input = document.getElementById("categories");
-  
-  
-  
+
   if (input.style.display === "none" || input.style.display === "") {
     input.style.display = "block";
     input.style.zIndex = 999;
@@ -137,20 +147,19 @@ search_input.addEventListener("keydown", function (event) {
 });
 
 const app = window.Telegram?.WebApp;
-
+// убирание вертикального свайпа в веб приложении для закрытия
 if (app) {
-  // 1. Убедимся, что Telegram WebApp готов
   app.ready();
 
   // 2. Попытка использовать актуальные методы Telegram API
   if (typeof app.disableVerticalSwipes === 'function') {
-    app.disableVerticalSwipes(); // ✅ Новый способ (официальный)
+    app.disableVerticalSwipes(); 
   }
 
   // 3. Возможно, работает кастомная настройка (для некоторых клиентов)
   if (typeof app.setOption === 'function') {
     try {
-      app.setOption('allow_vertical_swipe', false); // ✅ для Telegram X / v7.7+
+      app.setOption('allow_vertical_swipe', false);
     } catch (e) {
       console.warn("setOption не сработал:", e);
     }
