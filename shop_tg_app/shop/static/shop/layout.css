@@ -188,7 +188,7 @@ li {
 .sortings {
     position: absolute;
     top: 0;       
-    right: 0;        
+    right: -13px;        
     display: none;
     background-color: var(--background-color);
     border: 1px solid var(--text-color-dim);
@@ -219,6 +219,9 @@ li {
     border-radius: 15px;
     margin: 5px;
     margin-bottom: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 1.1;
 
 }
 
@@ -236,7 +239,10 @@ li {
     background-color: var(--parent-category-color);
     border-radius: 15px;
     color: var(--text-color-bright);
-    height: fit-content;
+    height: 5vh;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 1.1;
     text-align: center;
     margin: 5px;
 }
