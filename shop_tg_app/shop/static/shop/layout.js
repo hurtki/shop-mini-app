@@ -28,12 +28,11 @@ function toggleCategories() {
   // если открыто окно сортировок то закрываем его
   
   if (sortings_input) {
-    if (sortings_input & sortings_input.style.display === "block") {
+    if (sortings_input.style.display === "block") {
     toggleSort();
   }
   }
   
-
   const input = document.getElementById("categories");
 
   if (input.style.display === "none" || input.style.display === "") {
