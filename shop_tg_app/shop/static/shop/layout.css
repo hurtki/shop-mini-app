@@ -6,8 +6,7 @@
 
 :root {
     --background-color: rgb(20,22,27);
-    --text-color-bright: white;
-    --text-color-dim: rgba(255, 255, 255, 0.712);
+    --text-color: white;
     --warning-color-dim: rgba(244, 58, 58, 0.712);
     --parent-category-color: #13162700;
     --child-category-color: rgba(32, 37, 63, 0);
@@ -73,10 +72,9 @@ header {
 .search_bar{
     flex-grow: 1;
     justify-content: flex-start;
-    border: solid 1.7px var(--text-color-dim);
+    border: solid 1.7px var(--text-color);
     max-width: calc(96vw - var(--header-hight) - 53px - 20px - 4vw);
-    
-    
+    opacity: var(--opacity-high);
 }
 
 .search_icon, .category_icon, .sort_icon {
@@ -94,7 +92,7 @@ header {
     margin-right: 3px;
     background-color: rgba(255, 255, 255, 0);
     border: none;
-    color: var(--text-color-bright);
+    color: var(--text-color);
     font-size: 20px;
     outline: none;
     font-family: var(--font-1);
@@ -110,7 +108,7 @@ header {
 
 
 ul, li, strong {
-    color: var(--text-color-bright);
+    color: var(--text-color);
     padding-left: 0;
     list-style-type: none;
     width: fit-content;
@@ -142,7 +140,7 @@ li {
     width: 50%;
     background-color: var(--background-color);
     display: none;
-    border-left: solid var(--text-color-dim) 1px;
+    border-left: solid var(--text-color) 1px;
 }
 
 .categories_pick {
@@ -162,7 +160,7 @@ li {
 
 .parent_category_name {
     background-color: var(--parent-category-color);
-    border: 1px solid var(--text-color-dim);
+    border: 1px solid var(--text-color);
     border-radius: 15px;
     width: 42.5vw;
     padding: 5px;
@@ -170,13 +168,13 @@ li {
     padding-bottom: 3px;
     position: relative;
     font-weight: 600;
-    opacity: var(--opacity-high)
+    opacity: var(--opacity-mid)
     
 }
 
 .child_category_name {
     background-color: var(--child-category-color);
-    border: 1px solid var(--text-color-dim);
+    border: 1px solid var(--text-color);
     border-radius: 15px;
     width: 32.5vw;
     position: relative;
@@ -184,6 +182,7 @@ li {
     padding-top: 3px;
     padding-bottom: 3px;
     font-weight: 600;
+    opacity: var(--opacity-high);
 }
 .sortings {
     position: absolute;
@@ -191,7 +190,7 @@ li {
     right: -13px;        
     display: none;
     background-color: var(--background-color);
-    border: 1px solid var(--text-color-dim);
+    border: 1px solid var(--text-color);
     border-radius: 15px;
     width: 44vw;
     height: fit-content;
@@ -200,7 +199,7 @@ li {
     box-sizing: border-box;
 }
 
-/* Контейнер для первой строки: "Последнее" и крестик */
+
 .sortings_header {
     display: flex;
     justify-content: space-between;
@@ -210,25 +209,26 @@ li {
 .sort-created_at {
     flex-grow: 1;
     display: flex;
-    align-items: center;      /* вертикальное центрирование */
-    justify-content: center;  /* горизонтальное */
+    align-items: center;    
+    justify-content: center;  
     text-align: center;
     background-color: var(--parent-category-color);
-    height: 5vh;
-    color: var(--text-color-bright);
-    border-radius: 15px;
+    height: var(--header-hight);
+    color: var(--text-color);
+    border-radius: 10px;
     margin: 5px;
     margin-bottom: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     line-height: 1.1;
-
+    opacity: var(--opacity-high);
 }
 
 .cross_sortings_menu_icon {
-    width: 5vh;
-    height: 5vh;
+    width: var(--header-hight);
+    height: var(--header-hight);
     cursor: pointer;
+    opacity: var(--opacity-mid);
 }
 
 .sort-price, 
@@ -237,14 +237,16 @@ li {
     align-items: center;
     justify-content: center;
     background-color: var(--parent-category-color);
-    border-radius: 15px;
-    color: var(--text-color-bright);
-    height: 5vh;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    border-radius: 10px;
+    color: var(--text-color);
+    height: fit-content;
+    min-height: var(--header-hight);
+    padding-top: 5px;
+    padding-bottom: 5px;
     line-height: 1.1;
     text-align: center;
     margin: 5px;
+    opacity: var(--opacity-high);
 }
 
 .footer-separator {
@@ -255,7 +257,7 @@ li {
   }
   
   .mobile-footer {
-    color: var(--text-color-bright);
+    color: var(--text-color);
     text-align: center;
     padding: 20px 10px;
     font-size: 0.95rem;
@@ -266,7 +268,7 @@ li {
   }
   
   .footer-contact a {
-    color: var(--text-color-dim);
+    color: var(--text-color);
     text-decoration: underline;
   }
   

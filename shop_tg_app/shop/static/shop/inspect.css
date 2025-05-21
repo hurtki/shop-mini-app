@@ -8,7 +8,7 @@
 
 .name_tag {
   font-size: 40px;
-  color: white;
+  color: var(--text-color);
   margin-block: 0;
   margin: 2.3vh;
   margin-top: 1.5vh;
@@ -68,8 +68,11 @@ layoutbody {
   width: fit-content !important;
   padding: 4px !important;
   line-height: 1.1;
-
+  color: var(--text-color) !important;
+  opacity: var(--opacity-mid) !important;
 }
+
+
 .size-picker {
   display: flex;
   gap: 10px;
@@ -84,9 +87,9 @@ layoutbody {
 .size-picker label,
 .size-picker .size-label_unavailable {
   background-color: #222;
-  color: #eee;
-  width: 60px; /* фиксированная ширина */
-  height: 60px; /* фиксированная высота */
+  color: var(--text-color);
+  width: 60px; 
+  height: 60px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,7 +110,7 @@ layoutbody {
 .size-picker input[type="radio"]:checked + label {
   background-color: var(--text-color-dim);
   color: #111;
-  border-color: #fff;
+  border-color: var(--text-color);
 }
 
 .size-picker .size-label_unavailable {
@@ -135,8 +138,8 @@ layoutbody {
 
 .contact_seller_button {
   background-color: #202020;
-  color: white;
-  border: white 2px solid;
+  color: var(--text-color);
+  border: var(--text-color) 2px solid;
   opacity: var(--opacity-mid);
   width: 90%;
   position: relative;
@@ -148,7 +151,6 @@ layoutbody {
   padding-bottom: 5%;
   padding-top: 4%;
   margin-top: 10px;
-
 }
 
 .contact_seller_button:hover {

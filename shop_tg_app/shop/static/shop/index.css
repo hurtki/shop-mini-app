@@ -14,7 +14,6 @@
     padding: 0vw 2vw;
     box-sizing: border-box;
     flex-wrap: wrap;
-    color: #fff;
 }
 
 .product {
@@ -63,7 +62,7 @@
 .nothing_found {
     width: 96vw;
     max-width: 600px;
-    margin: 10px auto; /* центрирует блок по горизонтали */
+    margin: 10px auto; 
     text-align: center;
     padding: 5px;
     box-sizing: border-box;
