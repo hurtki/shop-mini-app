@@ -108,7 +108,7 @@ layoutbody {
 }
 
 .size-picker input[type="radio"]:checked + label {
-  background-color: var(--text-color-dim);
+  background-color: var(--text-color);
   color: #111;
   border-color: var(--text-color);
 }
