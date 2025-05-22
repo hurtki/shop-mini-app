@@ -12,6 +12,14 @@
 
 ---
 
+## Скришоты 
+
+![Главная страница](assets/main_page.jpg)
+![Сортировки](assets/main_page_sortings.jpg)
+![Страница продукта](assets/inspect_page.jpg)
+![Админка](assets/admin_page.jpg)
+
+
 ## Быстрый старт
 
 1. Клонируйте ветку `master`:  
