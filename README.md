@@ -12,6 +12,14 @@
 
 ---
 
+## Скриншоты интерфейса 
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/hurtki/shop-mini-app/assets/assets/main_page.jpg" alt="Главная страница" width="250"/>
+  <img src="https://raw.githubusercontent.com/hurtki/shop-mini-app/assets/assets/main_page_sortings.jpg" alt="Сортировки" width="250"/>
+  <img src="https://raw.githubusercontent.com/hurtki/shop-mini-app/assets/assets/inspect_page.jpg" alt="Страница продукта" width="250"/>
+</p>
+
 ## Быстрый старт
 
 1. Клонируйте ветку `master`:  
