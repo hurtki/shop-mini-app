@@ -15,7 +15,8 @@ class BaseContextMixin:
         context.update({
             "media_url": settings.MEDIA_URL,
             "base_url": self.request.get_host(),
-            "show_sort_bar": False,  # по умолчанию
+            "show_sort_bar": False,  # сортировка по умолчанию не отображается
+            "show_home_button": False, # кнопка "на главную" по умолчанию есть 
             "categories": categories,
             "tg_username": settings.TG_USERNAME,
             "max_search_characters": settings.MAX_SEARCH_CHARACTERS,
