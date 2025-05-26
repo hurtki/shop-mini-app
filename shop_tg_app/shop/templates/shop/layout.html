@@ -47,6 +47,14 @@
                 <!-- выбор категори -->
                 <ul class="categories_pick">
                     <h2 class="categories_name_tag">Категории</h2>
+                    {% if show_home_button %}
+                        <p class="categories_home_button" onclick="redirectToPage('{% url 'main' %}')">
+                        <!-- кнопка для возврата на главную страницу -->
+                            <img class="home_icon" src="{% static "shop/pics/home_icon.svg" %}">
+                            На главную
+                        </p>
+                    {% endif %}
+                    
                     {% for category in categories %}
                         <li>
                             <p class="parent_category_name"

@@ -38,7 +38,8 @@ class ProductsPageView(BaseContextMixin, TemplateView):
         # Базовый layout-контекст
         context.update({
             "show_sort_bar": True,
-            "products_querry_set": products # только вот здесь идет запрос к объектам 
+            "show_home_button": True,  # на странице будет кнопка "на главную"
+            "products_querry_set": products  
         })
         
         return context
