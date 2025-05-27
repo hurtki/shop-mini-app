@@ -54,8 +54,7 @@ DB_PORT=5432                    # Порт базы данных
 # 4. После запуска контейнеров выполните миграции и соберите статические файлы:
 
  ```bash
- docker compose exec web sh
- # docker compose exec --user root web sh
+ docker exec -it --user root tg-shop-django sh
  # если не хватает прав на collectstatic
  python manage.py migrate
  python manage.py collectstatic --noinput
@@ -68,7 +67,7 @@ DB_PORT=5432                    # Порт базы данных
 * Для доступа в shell контейнера Django используйте:
 
   ```bash
-  docker compose exec web sh
+  docker exec -it --user root tg-shop-django sh
   ```
 
 ---
