@@ -47,6 +47,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # качество webp перевью
 # ограничение получаемых постов на главное странице 
+# чтобы ограниечния не было то -1
 MAX_POSTS_ON_MAIN_PAGE = -1
 
 # качество webp перевью from 50 to 100
