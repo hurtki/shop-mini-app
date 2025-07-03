@@ -29,6 +29,7 @@ services:
       - .env                      # .env с переменными окружения
     depends_on:
       - postgres
+      - redis
     networks:
       - tg-shop-net
     ports:
@@ -61,6 +62,15 @@ services:
       - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt:ro
+  ##################################################################
+  # Redis ( использует порт 6379:6379 )
+  ##################################################################
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - tg-shop-net
 
   ##################################################################
   # Certbot (для получения SSL-сертификатов)
