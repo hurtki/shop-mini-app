@@ -1,11 +1,18 @@
 from django.contrib import admin
 from .models import Product, Size, ProductStock, Category, ProductPhoto
 from django.utils.safestring import mark_safe
+from django.core.cache import cache
 
 # инлайн показ продуктов на складе связанных с моделью конкретного продукта 
 class ProductStockInline(admin.TabularInline):
     model = ProductStock
     extra = 1  # количество пустых строк для добавления новых элементов по умолчанию
+    
+# кнопка для сбрасывания кеша в админке 
+@admin.action(description="Очистить кэш страницы")
+def clear_cache(modeladmin, request, queryset):
+    cache.clear()  # или cache.delete('some-key') если хочешь точечно
+    modeladmin.message_user(request, "Кэш успешно очищен!")
 
 class ProductPhotoInline(admin.TabularInline):
     model = ProductPhoto
@@ -25,6 +32,7 @@ class ProductPhotoInline(admin.TabularInline):
     
     
 class ProductAdmin(admin.ModelAdmin):
+    actions = [clear_cache]
     list_display = ('name', 'category', 'description')  # что показывать в списке
     search_fields = ('name', 'id')  # поля для поиска
     list_filter = ('category',)  # фильтрация по категориям

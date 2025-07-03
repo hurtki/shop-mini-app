@@ -92,7 +92,7 @@ class InspectPageView(BaseContextMixin, TemplateView):
 # сюда ничего не будет передаваться, просто продукты отсортировнные по новизне первые 10
 # не будет плашки сортировки 
 
-
+@method_decorator(cache_page(60 * 60), name='dispatch')
 class MainPageView(BaseContextMixin, TemplateView):
     template_name = "shop/index.html"
     allowed_sorts = settings.ALLOWED_SORTS

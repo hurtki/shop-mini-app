@@ -76,6 +76,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# НАСТРОЙКА КЕША ДЛЯ ЛОКАЛЬНОЙ РАЗРАБОТКИ 
+# НЕ ДЛЯ ПРОДАКШЕНА 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+
 ROOT_URLCONF = 'shop_tg_app.urls'
 
 TEMPLATES = [
