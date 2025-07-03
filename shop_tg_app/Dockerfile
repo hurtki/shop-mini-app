@@ -40,4 +40,5 @@ COPY . .
 # Меняем пользователя на непривилегированного
 USER userdj
 
-CMD gunicorn -c gunicorn.py shop_tg_app.wsgi
+CMD ["gunicorn", "-c", "gunicorn.py", "shop_tg_app.wsgi"]
+
