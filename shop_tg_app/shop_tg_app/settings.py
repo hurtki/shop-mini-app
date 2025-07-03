@@ -76,13 +76,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# НАСТРОЙКА КЕША ДЛЯ ЛОКАЛЬНОЙ РАЗРАБОТКИ 
-# НЕ ДЛЯ ПРОДАКШЕНА 
+# НАСТРОЙКА КЕША ПРОДАКШЕНА
+# CACHE SETTINGS FOR DOCKER REDIS SERVICE
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://redis:6379/1', # <---
     }
 }
+
 
 
 ROOT_URLCONF = 'shop_tg_app.urls'
