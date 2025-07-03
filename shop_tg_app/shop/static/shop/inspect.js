@@ -55,10 +55,10 @@ function handleBuyButton(product_id, product_price, product_name, username) {
 
     // Генерируем ссылку для Telegram
     const telegramLink = generateTelegramLink(username, message.trim());
-
+    console.log(telegramLink);
     // Открываем Telegram с предзаполненным сообщением
+    Telegram.WebApp.openTelegramLink(telegramLink);
     window.open(telegramLink, "_blank");
-
 }
 // последний выбранный радиобаттон
 let lastChecked = null;
