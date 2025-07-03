@@ -46,6 +46,11 @@ SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # качество webp перевью
+# ограничение получаемых постов на главное странице 
+MAX_POSTS_ON_MAIN_PAGE = -1
+
+# качество webp перевью from 50 to 100
+# 50 - низкое качество, 100 - высокое качество
 WEBP_QUALITY = 75
 
 INSTALLED_APPS = [

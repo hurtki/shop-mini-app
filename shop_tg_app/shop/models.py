@@ -132,5 +132,11 @@ class Size(models.Model):
     
     name = models.CharField(max_length=15, unique=True)
     
+     # порядок в котором будут отображаться размеры на странице 
+    priority = models.IntegerField(validators=[
+        MinValueValidator(-1),
+        MaxValueValidator(10000)
+    ], default=0)
+    
     def __str__(self):
         return self.name

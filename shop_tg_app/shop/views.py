@@ -62,7 +62,7 @@ class InspectPageView(BaseContextMixin, TemplateView):
         
         product_photos = ProductPhoto.objects.filter(product=product).order_by('-priority')
         
-        able_sizes = product.sizes.all()
+        able_sizes = product.sizes.all().order_by('priority')
         # поолучаем наличие на складе размеров
         sizes_availability = get_able_sizes(product, able_sizes=able_sizes)
         
@@ -100,12 +100,14 @@ class MainPageView(BaseContextMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # получаем параметр сортировки
         request = self.request
         sort = request.GET.get("sort")
         if sort not in self.allowed_sorts:
+            # сортируем по дефолту по новизне 
             sort = "-created_at"
 
-        # Получаем 10 самых новых продуктов с аннотированным главным фото
+        # Получаем продукты изначально отсортированые по новизне по дефолку 
         top_products = Product.objects.annotate(
             main_photo=Subquery(
                 get_photo_subquery().values('image')[:1]  # Ограничение на выборку только одного фото
@@ -113,8 +115,8 @@ class MainPageView(BaseContextMixin, TemplateView):
             main_photo_webp=Subquery(
                 get_photo_subquery().values('image_preview')[:1]  # Ограничение на выборку только одного фото
         )
-            
-        ).order_by(sort)[:10]
+        ).order_by(sort)[:settings.MAX_POSTS_ON_MAIN_PAGE if settings.MAX_POSTS_ON_MAIN_PAGE != -1 else None]
+
         
         context.update({
             "products_querry_set": top_products,
