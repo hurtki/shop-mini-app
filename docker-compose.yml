@@ -23,7 +23,7 @@ services:
   web:
     build: ./shop_tg_app          # Dockerfile находится в подпапке
     image: hurtki/tg-shop:latest
-    container_name: tg-shop-django
+    container_name: django
     restart: always
     env_file:
       - .env                      # .env с переменными окружения
@@ -45,7 +45,7 @@ services:
   ##################################################################
   nginx:
     image: nginx:latest
-    container_name: tg-shop-nginx-server
+    container_name: nginx
     restart: always
     depends_on:
       - web
@@ -67,6 +67,7 @@ services:
   ##################################################################
   redis:
     image: redis:7-alpine
+    container_name: redis
     ports:
       - "6379:6379"
     networks:
@@ -77,7 +78,7 @@ services:
   ##################################################################
   certbot:
     image: certbot/certbot
-    container_name: tg-shop-certbot
+    container_name: certbot
     volumes:
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
