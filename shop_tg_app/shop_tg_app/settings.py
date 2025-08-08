@@ -18,7 +18,11 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")  # Никогда не хард
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")  # Список хостов, которые могут обращаться к вашему приложению
+
+allowed_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS")
+assert allowed_hosts is not None, "DJANGO_ALLOWED_HOSTS is not set"
+ALLOWED_HOSTS = allowed_hosts.split(",")
+
 
 # статические файлы 
 STATIC_URL = '/static/'
