@@ -21,27 +21,22 @@ services:
   # Django + Gunicorn
   ##################################################################
   web:
-    build: ./shop_tg_app          # Dockerfile находится в подпапке
+    build: ./shop_tg_app          # Dockerfile in /shop_tg_app/DockerFile
     image: hurtki/tg-shop:latest
     container_name: django
     restart: always
     env_file:
-      - .env                      # .env с переменными окружения
+      - .env                      
     depends_on:
       - postgres
       - redis
     networks:
-      - tg-shop-net
-    ports:
-      - "8000:8000"               # оставляем наружу только для дебага
+      - tg-shop-net           
     volumes:
-      # cтатика-медиа на хосте, чтобы nginx читал напрямую
       - ./shop_tg_app/static:/app/www/shop_tg_app/static
       - ./shop_tg_app/media:/app/www/shop_tg_app/media
-      # (не монтируем logs, т.к. Gunicorn пишет в STDOUT)
-
   ##################################################################
-  # Nginx (обслуживает 80 → web:8000)
+  # Nginx (80 → web:8000)
   ##################################################################
   nginx:
     image: nginx:latest
@@ -60,13 +55,11 @@ services:
       - ./shop_tg_app/media:/app/www/shop_tg_app/media:ro
       - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
   ##################################################################
-  # Redis ( использует порт 6379:6379 )
+  # Redis ( using port 6379 )
   ##################################################################
   redis:
     image: redis:7-alpine
     container_name: redis
-#    ports:
-#      - "6379:6379"
     networks:
       - tg-shop-net
 

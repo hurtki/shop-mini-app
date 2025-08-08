@@ -32,16 +32,12 @@ services:
       - redis
     networks:
       - tg-shop-net
-    ports:
-      - "8000:8000"               # оставляем наружу только для дебага
     volumes:
-      # cтатика-медиа на хосте, чтобы nginx читал напрямую
       - ./shop_tg_app/static:/app/www/shop_tg_app/static
       - ./shop_tg_app/media:/app/www/shop_tg_app/media
-      # (не монтируем logs, т.к. Gunicorn пишет в STDOUT)
 
   ##################################################################
-  # Nginx (обслуживает 80 → web:8000)
+  # Nginx (80 → web:8000)
   ##################################################################
   nginx:
     image: nginx:latest
@@ -63,13 +59,11 @@ services:
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt:ro
   ##################################################################
-  # Redis ( использует порт 6379:6379 )
+  # Redis ( using 6379 )
   ##################################################################
   redis:
     image: redis:7-alpine
     container_name: redis
-#    ports:
-#      - "6379:6379"
     networks:
       - tg-shop-net
 
