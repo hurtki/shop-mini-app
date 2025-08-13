@@ -5,7 +5,7 @@
    cd mini-app-tg-shop
    ```
 
-# 2. Create `.env` with this variablesf:
+# 2. Create `.env` with this variables:
 
 ``` python
 DJANGO_SECRET_KEY="your key" # secret django key
