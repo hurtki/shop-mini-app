@@ -26,8 +26,6 @@ Project features:
 
 ## Project structure (кратко)
 
-Вот краткое описание структуры проекта на английском:
-
 ---
 
 **Django Project Structure Overview:**
