@@ -37,6 +37,9 @@ services:
     volumes:
       - ./shop_tg_app/static:/app/www/shop_tg_app/static
       - ./shop_tg_app/media:/app/www/shop_tg_app/media
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   ##################################################################
   # Nginx (80 → web:8000)
