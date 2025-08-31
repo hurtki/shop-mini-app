@@ -67,7 +67,7 @@ More info about dev docker-compose at the bottom
 # 4. After Containers started, build static files and make migrations from django container shell:
 
  ```bash
- docker exec -it --user root tg-shop-django sh
+ docker exec -it --user root web sh
  python manage.py migrate
  python manage.py collectstatic --noinput
  exit
