@@ -16,31 +16,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")  # Никогда не хардкодь секретку
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Getting DJANGO_DEBUG variable from enviroment, it was set up in docker-compose accordingly to dev/nossl/ssl type of deployment
+# For dev=True, for nossl = False, for ssl = True
+DEBUG = os.environ.get("DJANGO_DEBUG", False) in ["true", "True"]
 
 
 allowed_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS")
 assert allowed_hosts is not None, "DJANGO_ALLOWED_HOSTS is not set"
 ALLOWED_HOSTS = allowed_hosts.split(",")
 
-
-# статические файлы 
+# static files paths
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-# базовые папки для хранения медиа  
+# folder for storing media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# юзернейм продавца 
-# туда перекидывает когда кто-то нажимает кнопку купить 
+# Seller telegramm username 
+# Redirecting to there when clicking BUY button on inspect page
 TG_USERNAME = "VoidMgr"
 
-
-# доступные соротировки 
+# Allowed sorts ( for url, it won't create new buttons in UI) 
 ALLOWED_SORTS = ["created_at", 'price', '-price', '-created_at']
 
-# ограничения размера строки по которой ищутся продукты 
+# Limitations on the size of the search string used to search for products
 MAX_SEARCH_CHARACTERS = 15
 MIN_SEARCH_CHARACTERS = 3
 
@@ -49,13 +49,13 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# качество webp перевью
-# ограничение получаемых постов на главное странице 
-# чтобы ограниечния не было то -1
+# limit how many posta will be shown on the first/main page  
+# for no limit set: -1
 MAX_POSTS_ON_MAIN_PAGE = -1
 
-# качество webp перевью from 50 to 100
-# 50 - низкое качество, 100 - высокое качество
+# quality of webp preview 50 to 100
+# preview pictures are used on all pages except inspect page
+# 50 - low quality, 100 - high quality 
 WEBP_QUALITY = 75
 
 INSTALLED_APPS = [
@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    # библиотека для создания деревьев, реализуем категории для эффективной выборки их дерева 
+    # library for creating trees, for categories
     'mptt',
 ]
 
@@ -80,7 +80,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# НАСТРОЙКА КЕША ПРОДАКШЕНА
 # CACHE SETTINGS FOR DOCKER REDIS SERVICE
 CACHES = {
     'default': {
@@ -111,9 +110,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'shop_tg_app.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,7 +125,28 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
-
+# static files storage setting
+if DEBUG:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+else:
+    # here is a ManifestStaticFilesStorage to avoid caching old static files and create new versions
+    # you can read more on django docs ( search for ManifestStaticFilesStorage)
+    # https://docs.djangoproject.com/en/5.2/ref/contrib/staticfiles/ 
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
+        },
+    }
 
 
 # Password validation
@@ -168,13 +185,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-STORAGES = {
-    'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
-    },
-    'staticfiles': {
-        'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
-    },
-}

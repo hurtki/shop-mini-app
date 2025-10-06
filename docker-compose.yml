@@ -27,6 +27,8 @@ services:
     restart: always
     env_file:
       - .env                      # .env с переменными окружения
+    environment:
+      - DJANGO_DEBUG=false
     depends_on:
       - postgres
       - redis

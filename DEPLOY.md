@@ -2,7 +2,7 @@
 # 1. Clone branch `master`:  
    ```bash
    git clone -b master https://github.com/hurtki/shop-mini-app.git
-   cd mini-app-tg-shop
+   cd shop-mini-app
    ```
 
 # 2. Create `.env` with this variables:
@@ -67,7 +67,7 @@ More info about dev docker-compose at the bottom
 # 4. After Containers started, build static files and make migrations from django container shell:
 
  ```bash
- docker exec -it --user root web sh
+ docker exec -it --user root django sh
  python manage.py migrate
  python manage.py collectstatic --noinput
  exit

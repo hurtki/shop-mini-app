@@ -34,8 +34,9 @@ RUN mkdir -p /app/www/shop_tg_app/logs \
 RUN mkdir -p /app/www/shop_tg_app/media \
  && chown -R userdj:groupdjango /app/www/shop_tg_app/media \
  && chmod -R u+rwX /app/www/shop_tg_app/media
-# Копируем весь проект
-COPY . .
+ 
+# Copy of all the project with rights of new userdj
+COPY --chown=userdj:groupdjango . .
 
 # Меняем пользователя на непривилегированного
 USER userdj

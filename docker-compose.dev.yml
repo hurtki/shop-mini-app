@@ -27,6 +27,8 @@ services:
     restart: always
     env_file:
       - .env                      # .env with venv variables
+    environment:
+      - DJANGO_DEBUG=true
     depends_on:
       - postgres
       - redis
@@ -57,8 +59,8 @@ services:
     volumes:
       - ./nginx/tg-shop.dev.conf:/etc/nginx/conf.d/tg-shop.conf:ro
       - /dev/null:/etc/nginx/conf.d/default.conf
-      - ./shop_tg_app/static:/app/www/shop_tg_app/static:ro
-      - ./shop_tg_app/media:/app/www/shop_tg_app/media:ro
+      - ./shop_tg_app/static:/app/www/shop_tg_app/static
+      - ./shop_tg_app/media:/app/www/shop_tg_app/media
       - ./shop_tg_app/logs:/app/www/shop_tg_app/logs
   ##################################################################
   # Redis ( using port 6379 to ousside for debugging)
