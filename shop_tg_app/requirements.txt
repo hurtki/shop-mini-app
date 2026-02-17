@@ -8,6 +8,6 @@ packaging==25.0
 pillow==12.1.1
 psycopg2-binary==2.9.10
 python-dotenv==1.1.0
-sqlparse==0.5.3
+sqlparse==0.5.4
 gevent>=1.4
 redis
